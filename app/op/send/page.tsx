@@ -106,7 +106,7 @@ const Send = () => {
           <option value={"4"}>Forward Message</option>
         </select>
       </div>
-      <div className={"w-full p-4 flex flex-col gap-2"}>
+      <div className={"w-full p-4 flex flex-col gap-2 max-w-xl"}>
         <label>3. Input content:</label>
         {type === "1" && (
           <div>
