@@ -6,6 +6,12 @@ const Toolbar = () => {
   const [testMode, setTestMode] = useState(false);
 
   useEffect(() => {
+    if (window.localStorage.getItem("mode") === "test") {
+      setTestMode(true);
+    }
+  }, []);
+
+  useEffect(() => {
     if (testMode) {
       window.localStorage.setItem("mode", "test");
       console.log("mode", "test");

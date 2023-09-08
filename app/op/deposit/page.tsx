@@ -46,6 +46,7 @@ const Send = () => {
     }
 
     try {
+      console.log(form, url, chainId);
       const res = await fetch(url, {
         method: "POST",
         headers: {
@@ -63,11 +64,20 @@ const Send = () => {
         .then((res) => res.value);
       if (res) {
         setStatus("success");
+        setTimeout(() => {
+          setStatus("idle");
+        }, 3000);
       } else {
         setStatus("error");
+        setTimeout(() => {
+          setStatus("idle");
+        }, 3000);
       }
     } catch (e) {
       setStatus("error");
+      setTimeout(() => {
+        setStatus("idle");
+      }, 3000);
     }
   };
 
