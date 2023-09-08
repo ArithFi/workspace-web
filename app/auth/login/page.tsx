@@ -27,12 +27,12 @@ export default function Page() {
       if (data?.data) {
         setStatus("success");
         window.localStorage.setItem("auth", data.data);
-        setInterval(() => {
+        setTimeout(() => {
           router.push("/futures");
         }, 3_000);
       } else {
         setStatus("error");
-        setInterval(() => {
+        setTimeout(() => {
           setStatus("idle");
         }, 3_000);
       }
