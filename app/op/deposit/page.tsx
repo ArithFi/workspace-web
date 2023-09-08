@@ -38,7 +38,7 @@ const Send = () => {
     const mode = window.localStorage.getItem("mode") || "prod";
     let url, chainId;
     if (mode === "test") {
-      url = "https://dev.nestfi.net/nestfi/op/user/airdrop";
+      url = "https://me.nestfi.net/arithfi/op/user/airdrop";
       chainId = 97;
     } else {
       url = "https://db.nestfi.net/nestfi/op/user/airdrop";
@@ -46,7 +46,6 @@ const Send = () => {
     }
 
     try {
-      console.log(form, url, chainId);
       const res = await fetch(url, {
         method: "POST",
         headers: {
