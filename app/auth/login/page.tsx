@@ -27,9 +27,7 @@ export default function Page() {
       if (data?.data) {
         setStatus("success");
         window.localStorage.setItem("auth", data.data);
-        setTimeout(() => {
-          router.push("/futures");
-        }, 1_000);
+        router.push("/futures");
       } else {
         setStatus("error");
         setTimeout(() => {
