@@ -22,7 +22,11 @@ const Toolbar = () => {
   }, [testMode]);
 
   return (
-    <div className={"h-[60px] w-full flex items-center justify-between"}>
+    <div
+      className={`h-[60px] w-full flex items-center justify-between ${
+        testMode ? "border-b" : "border-0"
+      } border-red-500`}
+    >
       <div className={"max-w-xl w-full"}>
         <input
           placeholder={"Search"}
@@ -40,7 +44,7 @@ const Toolbar = () => {
         >
           <div
             className={`flex space-x-1 text-sm ${
-              testMode ? "text-purple-500" : "text-gray-800"
+              testMode ? "text-red-500" : "text-gray-800"
             }`}
           >
             <div>测试模式</div>
@@ -48,7 +52,7 @@ const Toolbar = () => {
           <Switch
             checked={testMode}
             // onChange={setEnabled}
-            className={`${testMode ? "bg-purple-500" : "bg-gray-200"}
+            className={`${testMode ? "bg-red-500" : "bg-gray-200"}
           relative inline-flex h-[14px] w-[24px] shrink-0 cursor-pointer rounded-full border border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
           >
             <span className="sr-only">测试模式</span>
