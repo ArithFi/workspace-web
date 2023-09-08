@@ -19,7 +19,9 @@ export default function Layout(props: { children: ReactNode }) {
     <div className={"h-full w-full flex relative justify-center"}>
       <div className={"max-w-[1920px] w-full h-full flex"}>
         <Navigation active={"/futures"} />
-        <div className={"w-full px-8 mr-10 space-y-2"}>
+        <div
+          className={"w-full px-8 mr-10 space-y-2 overflow-hidden break-all"}
+        >
           <Toolbar />
           {props.children}
         </div>
