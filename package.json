@@ -14,6 +14,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@ethersproject/address": "^5.7.0",
     "@headlessui/react": "^1.7.17",
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
