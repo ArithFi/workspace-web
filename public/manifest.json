@@ -2,13 +2,6 @@
   "name": "ArithFi",
   "short_name": "ArithFi",
   "description": "ArithFi.",
-  "icons": [
-    {
-      "src": "/favicon.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
   "theme_color": "#202123",
   "background_color": "#ffffff",
   "orientation": "portrait",

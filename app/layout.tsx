@@ -16,17 +16,6 @@ export const metadata: Metadata = {
     "width=device-width, initial-scale=1, shrink-to-fit=no,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
   applicationName: "ATF",
   themeColor: "#fff",
-  openGraph: {
-    images: "/apple-touch-icon.png",
-    title,
-    description,
-  },
-  twitter: {
-    title,
-    description,
-    card: "summary_large_image",
-    creator: "@arithfi",
-  },
   manifest: "/manifest.json",
 };
 
