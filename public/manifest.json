@@ -1,7 +1,7 @@
 {
-  "name": "AbandonAI",
-  "short_name": "AbandonAI",
-  "description": "Powered by OpenAI.",
+  "name": "ArithFi",
+  "short_name": "ArithFi",
+  "description": "ArithFi.",
   "icons": [
     {
       "src": "/favicon.png",

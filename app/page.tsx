@@ -1,15 +1,21 @@
 "use client";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { redirect } from "next/navigation";
+import { useEffect } from "react";
+import jwtDecode from "jwt-decode";
 
 export default function Index() {
-  const { user, error, isLoading } = useUser();
+  useEffect(() => {
+    const auth = window.localStorage.getItem("auth");
+    if (auth) {
+      // @ts-ignore
+      const { exp } = jwtDecode(auth);
+      if (exp < Date.now() / 1000) {
+        redirect("/auth/login");
+      } else {
+        redirect("/futures");
+      }
+    }
+  }, []);
 
-  if (isLoading) return <div></div>;
-
-  if (error) return redirect(`/auth/error?message=${error.message}`);
-
-  if (user) return redirect("/dashboard");
-
-  return redirect("/auth/login");
+  return <div>Checking your browser...</div>;
 }
