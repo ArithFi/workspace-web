@@ -29,7 +29,7 @@ export default function Page() {
         window.localStorage.setItem("auth", data.data);
         setTimeout(() => {
           router.push("/futures");
-        }, 3_000);
+        }, 1_000);
       } else {
         setStatus("error");
         setTimeout(() => {
