@@ -76,8 +76,8 @@ const Send = () => {
   };
 
   return (
-    <div className={"h-full w-full"}>
-      <div className={"w-fit p-4 space-x-2"}>
+    <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
+      <div className={"w-full flex flex-col gap-2"}>
         <label>1. Choose a bot:</label>
         <select
           name="bot"
@@ -92,7 +92,7 @@ const Send = () => {
           ))}
         </select>
       </div>
-      <div className={"w-fit p-4 space-x-2"}>
+      <div className={"w-full flex flex-col gap-2"}>
         <label>2. Choose a type:</label>
         <select
           name="bot"
@@ -106,7 +106,7 @@ const Send = () => {
           <option value={"4"}>Forward Message</option>
         </select>
       </div>
-      <div className={"w-full p-4 flex flex-col gap-2 max-w-xl"}>
+      <div className={"w-full flex flex-col gap-2"}>
         <label>3. Input content:</label>
         {type === "1" && (
           <div>
@@ -222,10 +222,7 @@ const Send = () => {
           </div>
         )}
       </div>
-      <button
-        className={"bg-yellow-500 p-2 rounded ml-4"}
-        onClick={sendMessage}
-      >
+      <button className={"bg-yellow-500 p-2 rounded"} onClick={sendMessage}>
         {status === "idle" && "Send Messages"}
         {status === "success" && "Success"}
         {status === "error" && "Error"}
