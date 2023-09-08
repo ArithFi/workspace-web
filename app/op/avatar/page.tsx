@@ -5,11 +5,11 @@ import { isAddress } from "@ethersproject/address";
 const Avatar = () => {
   const [file, setFile] = useState<File | null>(null);
   const [sendStatus, setSendStatus] = useState("idle");
-  const [klAddress, setKlAddress] = useState("");
+  const [address, setAddress] = useState("");
 
   const send = async () => {
     setSendStatus("loading");
-    if (!isAddress(klAddress)) {
+    if (!isAddress(address)) {
       setSendStatus("error");
       return;
     }
@@ -19,7 +19,7 @@ const Avatar = () => {
       let formData = new FormData();
       formData.append("file", file!);
       await fetch(
-        `https://cms.nestfi.net/workbench-api/nestfi/uploadFile?walletAddress=${klAddress}`,
+        `https://cms.nestfi.net/workbench-api/nestfi/uploadFile?walletAddress=${address}`,
         {
           method: "POST",
           mode: "cors",
@@ -41,7 +41,7 @@ const Avatar = () => {
         <label>KOL 地址</label>
         <input
           className={"border p-2 focus:outline-0"}
-          onChange={(e) => setKlAddress(e.target.value)}
+          onChange={(e) => setAddress(e.target.value)}
         />
       </div>
       <div className={"w-full flex flex-col gap-2"}>
@@ -52,7 +52,8 @@ const Avatar = () => {
         />
       </div>
       <button
-        disabled={!isAddress(klAddress) || !file}
+        disabled={!isAddress(address) || !file}
+        onClick={send}
         className={"bg-yellow-500 p-2 rounded disabled:bg-gray-200"}
       >
         {sendStatus === "idle" && "上传"}
