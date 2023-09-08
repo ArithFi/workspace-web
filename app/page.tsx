@@ -14,6 +14,8 @@ export default function Index() {
       } else {
         redirect("/futures");
       }
+    } else {
+      redirect("/auth/login");
     }
   }, []);
 
