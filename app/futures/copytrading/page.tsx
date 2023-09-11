@@ -3,7 +3,7 @@ import IframeResizer from "iframe-resizer-react";
 const Metabase = () => {
   return (
     <IframeResizer
-      src="https://workspace.nestprotocol.org/public/dashboard/c19afe08-16dc-41d1-a6fd-d2762a007db3"
+      src="https://workspace.nestprotocol.org/public/dashboard/c3445415-7070-4cdd-830a-9ccb55e35093"
       width="100%"
       height="100%"
       scrolling
