@@ -87,6 +87,7 @@ const CoreNav = () => {
               <div key={index}>
                 <Link
                   href={item.path}
+                  prefetch={true}
                   className={`text-sm ${
                     pathname === item.path ? "text-yellow-500" : "text-gray-800"
                   }`}
