@@ -57,6 +57,7 @@ const Avatar = () => {
         className={"bg-yellow-500 p-2 rounded disabled:bg-gray-200"}
       >
         {sendStatus === "idle" && "上传"}
+        {sendStatus === "loading" && "上传中"}
         {sendStatus === "error" && "失败"}
         {sendStatus === "success" && "成功"}
       </button>
