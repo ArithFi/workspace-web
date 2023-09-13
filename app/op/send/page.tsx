@@ -15,7 +15,7 @@ const Send = () => {
     const auth = window.localStorage.getItem("auth");
     if (auth) {
       const data = await fetch(
-        `https://cms.nestfi.net/workbench-api/telegram/botlist?type=0`,
+        `https://me.nestfi.net/workbench-api/telegram/botlist?type=0`,
         {
           headers: {
             Authorization: `Bearer ${auth}`,
@@ -39,7 +39,7 @@ const Send = () => {
       setStatus("loading");
       try {
         const data = await fetch(
-          `https://cms.nestfi.net/workbench-api/telegram/sendTelegramMsg`,
+          `https://me.nestfi.net/workbench-api/telegram/sendTelegramMsg`,
           {
             headers: {
               Authorization: `Bearer ${auth}`,

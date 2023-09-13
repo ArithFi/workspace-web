@@ -12,7 +12,7 @@ export default function Page() {
     setStatus("loading");
     try {
       const data = await fetch(
-        `https://cms.nestfi.net/workbench-api/sys/login`,
+        `https://me.nestfi.net/workbench-api/sys/login`,
         {
           method: "POST",
           headers: {
