@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isAddress } from "@ethersproject/address";
 
 const Send = () => {
@@ -12,6 +12,16 @@ const Send = () => {
     walletAddress: "",
   });
   const [token, setToken] = useState("");
+  const [balance, setBalance] = useState({
+    id: 0,
+    walletaddress: "",
+    totalBanlance: 0,
+    availableBalance: 0,
+    freeze: 0,
+    block: 0,
+    withdrawaling: 0,
+    copyBalance: 0,
+  });
 
   const send = async () => {
     setStatus("loading");
@@ -59,6 +69,52 @@ const Send = () => {
     }
   };
 
+  const getBalance = async (walletAddress: string, token: string) => {
+    try {
+      const mode = window.localStorage.getItem("mode") || "prod";
+      let url, chainId;
+      if (mode === "test") {
+        url = "https://me.nestfi.net/nestfi/op/user/asset/by-address";
+        chainId = 97;
+      } else {
+        url = "https://db.nestfi.net/nestfi/op/user/asset/by-address";
+        chainId = 56;
+      }
+      const data = await fetch(
+        `${url}?chainId=${chainId}&walletAddress=${walletAddress}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
+            token: `${Math.ceil(new Date().getTime() / 1000)}`,
+          },
+        },
+      )
+        .then((res) => res.json())
+        .then((res) => res.value);
+      setBalance(data);
+    } catch (e) {
+      console.log("fetch balance error");
+    }
+  };
+
+  useEffect(() => {
+    if (isAddress(form.walletAddress) && token) {
+      getBalance(form.walletAddress, token);
+    } else {
+      setBalance({
+        id: 0,
+        walletaddress: "",
+        totalBanlance: 0,
+        availableBalance: 0,
+        freeze: 0,
+        block: 0,
+        withdrawaling: 0,
+        copyBalance: 0,
+      });
+    }
+  }, [form.walletAddress, token]);
+
   return (
     <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
       <div className={"w-full flex flex-col gap-2 "}>
@@ -74,6 +130,16 @@ const Send = () => {
           className={"border w-full p-2"}
         />
       </div>
+      {balance?.walletaddress && (
+        <div className={"w-full text-xs border p-4 rounded grid grid-cols-2"}>
+          <div>total balance: {balance?.totalBanlance}</div>
+          <div>available balance: {balance?.availableBalance}</div>
+          <div>freeze: {balance?.freeze}</div>
+          <div>block: {balance?.block}</div>
+          <div>withdrawaling: {balance?.withdrawaling}</div>
+          <div>copy balance: {balance?.copyBalance}</div>
+        </div>
+      )}
       <div className={"w-full flex flex-col gap-2"}>
         <label>划转数量</label>
         <input
