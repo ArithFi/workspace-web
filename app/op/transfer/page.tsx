@@ -74,10 +74,10 @@ const Send = () => {
       const mode = window.localStorage.getItem("mode") || "prod";
       let url, chainId;
       if (mode === "test") {
-        url = "https://me.nestfi.net/nestfi/op/user/asset/by-address";
+        url = "https://me.nestfi.net/arithfi/op/user/asset/by-address";
         chainId = 97;
       } else {
-        url = "https://db.nestfi.net/nestfi/op/user/asset/by-address";
+        url = "";
         chainId = 56;
       }
       const data = await fetch(
@@ -85,8 +85,6 @@ const Send = () => {
         {
           headers: {
             Authorization: `${token}`,
-            "Content-Type": "application/json",
-            token: `${Math.ceil(new Date().getTime() / 1000)}`,
           },
         },
       )

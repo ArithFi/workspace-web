@@ -47,7 +47,7 @@ const Toolbar = () => {
               testMode ? "text-red-500" : "text-gray-800"
             }`}
           >
-            <div>测试模式</div>
+            <div className={"whitespace-nowrap"}>测试模式</div>
           </div>
           <Switch
             checked={testMode}
