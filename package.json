@@ -19,6 +19,7 @@
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "ali-react-table": "^2.6.1",
     "autoprefixer": "10.4.15",
     "dotenv": "^16.3.1",
     "eslint": "8.48.0",
@@ -35,6 +36,7 @@
     "vercel": "^32.1.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.198",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "3.0.3"
