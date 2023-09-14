@@ -9,7 +9,6 @@ const Metabase = () => {
       height="100%"
       scrolling
       sizeHeight
-      allowTransparency
     ></IframeResizer>
   );
 };
