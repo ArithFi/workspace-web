@@ -5,6 +5,7 @@ import {
   LeftCrossTreeNode,
   TopCrossTreeNode,
 } from "ali-react-table/pivot";
+import { Tab } from "@headlessui/react";
 
 const KOL = () => {
   const _get7DaysAgo = () => {
@@ -12,6 +13,7 @@ const KOL = () => {
     date.setDate(date.getDate() - 6);
     return date.toISOString().slice(0, 10);
   };
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [from, setFrom] = useState(_get7DaysAgo());
   const [to, setTo] = useState(new Date().toISOString().slice(0, 10));
   const [type, setType] = useState("d");
@@ -73,7 +75,7 @@ const KOL = () => {
         },
       },
     ).then((res) => res.json());
-    Object.values(res.data || {}).forEach((item: any) => {
+    Object?.values(res.data || {}).forEach((item: any) => {
       for (let i = 0; i < item.length; i++) {
         _list = _list.concat(item[i]);
       }
@@ -116,7 +118,7 @@ const KOL = () => {
         },
       },
     ).then((res) => res.json());
-    await Object?.keys(res?.data || {})?.forEach((item) => {
+    Object?.keys(res?.data || {})?.forEach((item) => {
       if (!map?.[item]) {
         map[item] = {
           avgDestory: 0,
@@ -1450,7 +1452,140 @@ const KOL = () => {
     );
   };
 
-  return <div>KOL</div>;
+  const menu = [
+    {
+      title: "交易人数",
+      panel: tradeCount(),
+    },
+    {
+      title: "交易量",
+      panel: tradeAmount(),
+    },
+    {
+      title: "客单价+平均通缩+人均交易次数",
+      panel: avgTradeAmount(),
+    },
+    {
+      title: "交易人次",
+      panel: tradeUserTotal(),
+    },
+    {
+      title: "每日销毁",
+      panel: destory(),
+    },
+    {
+      title: "每日手续费",
+      panel: fee(),
+    },
+    {
+      title: "累计买币量",
+      panel: buyNest(),
+    },
+    {
+      title: "累计卖币量",
+      panel: sellNest(),
+    },
+    {
+      title: "每日充值",
+      panel: deposit(),
+    },
+    {
+      title: "每日提现",
+      panel: withdraw(),
+    },
+  ];
+
+  return (
+    <div className={"overflow-y-auto"}>
+      <div className={"flex pb-2 text-sm gap-2 items-center"}>
+        <input
+          className={"border p-2"}
+          type={"date"}
+          value={from}
+          onChange={(e) => setFrom(e.target.value)}
+        />
+        <input
+          className={"border p-2"}
+          type={"date"}
+          value={to}
+          onChange={(e) => setTo(e.target.value)}
+        />
+        <button
+          className={`border w-10 p-2 ${
+            type === "d" ? "bg-yellow-500 text-white" : ""
+          }`}
+          onClick={() => setType("d")}
+        >
+          日
+        </button>
+        <button
+          className={`border w-10 p-2 ${
+            type === "w" ? "bg-yellow-500 text-white" : ""
+          }`}
+          onClick={() => setType("w")}
+        >
+          周
+        </button>
+        <button
+          className={`border w-10 p-2 ${
+            type === "m" ? "bg-yellow-500 text-white" : ""
+          }`}
+          onClick={() => setType("m")}
+        >
+          月
+        </button>
+        <select
+          className={"border p-2"}
+          onChange={(e) => {
+            setFilter1(e.target.value);
+          }}
+        >
+          <option value="all">标记</option>
+          <option value="main">重点</option>
+          <option value="airdrop">空投</option>
+        </select>
+        <select
+          className={"border p-2"}
+          onChange={(e) => {
+            setFilter2(e.target.value);
+          }}
+        >
+          <option value="all">国家</option>
+          {countryList.map((item) => (
+            <option key={item} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+        <input
+          className={"border p-2"}
+          defaultValue={filter3}
+          placeholder={"search..."}
+          onChange={(e) => setFilter3(e.target.value)}
+        />
+        <div>筛选后共 {users.length} 位 KOL</div>
+      </div>
+      <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+        <Tab.List className="flex space-x-1 rounded-xl p-1">
+          {menu.map((item, index) => (
+            <Tab
+              key={index}
+              className={`py-2.5 px-3 text-sm font-medium rounded-lg  ${
+                index === selectedIndex ? "bg-yellow-500 text-white" : ""
+              }`}
+            >
+              {item.title}
+            </Tab>
+          ))}
+        </Tab.List>
+        <Tab.Panels className="mt-2">
+          {menu.map((item, index) => (
+            <Tab.Panel key={index}>{item.panel}</Tab.Panel>
+          ))}
+        </Tab.Panels>
+      </Tab.Group>
+    </div>
+  );
 };
 
 export default KOL;
