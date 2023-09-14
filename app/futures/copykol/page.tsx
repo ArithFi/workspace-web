@@ -18,12 +18,9 @@ const CopyKOL = () => {
   const [to, setTo] = useState(new Date().toISOString().slice(0, 10));
   const [type, setType] = useState("d");
   const [list, setList] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
   const [filter1, setFilter1] = useState("all"); // all, main, airdrop
   const [filter2, setFilter2] = useState("all"); // all, country1
   const [filter3, setFilter3] = useState(""); // wallet
-  const [select, setSelect] = useState("");
-  const [inviteeInfo, setInviteeInfo] = useState([]);
 
   const filterList = useMemo(() => {
     return list
@@ -65,7 +62,6 @@ const CopyKOL = () => {
 
   const fetchList = useCallback(async () => {
     let _list: any[] = [];
-    setLoading(true);
     const auth = window.localStorage.getItem("auth");
     const res = await fetch(
       `https://me.nestfi.net/workbench-api/hedge/users/copy/kol/info?from=${from}&to=${to}&type=${type}`,
@@ -85,7 +81,6 @@ const CopyKOL = () => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       }),
     );
-    setLoading(false);
   }, [from, to, type]);
 
   const topTreeDates = useMemo(() => {
@@ -102,84 +97,6 @@ const CopyKOL = () => {
         };
       });
   }, [filterList]);
-
-  const getInviteeInfo = useCallback(async () => {
-    if (!select) {
-      setInviteeInfo([]);
-      return;
-    }
-    const map: any = {};
-    const auth = window.localStorage.getItem("auth");
-    const res = await fetch(
-      `https://me.nestfi.net/workbench-api/hedge/users/copy/invitee/info?from=${from}&to=${to}&type=${type}&inviterWalletAddress=${select}`,
-      {
-        headers: {
-          Authorization: `Bearer ${auth}`,
-        },
-      },
-    ).then((res) => res.json());
-    Object?.keys(res?.data || {})?.forEach((item) => {
-      if (!map?.[item]) {
-        map[item] = {
-          avgDestory: 0,
-          avgDestoryTotal: 0,
-          avgTradeAmount: 0,
-          avgTradeAmountTotal: 0,
-          avgTradeDealCount: 0,
-          avgTradeDealCountTotal: 0,
-          buyNest: 0,
-          buyNestTotal: 0,
-          destory: 0,
-          destoryTotal: 0,
-          fee: 0,
-          feeTotal: 0,
-          sellNest: 0,
-          sellNestTotal: 0,
-          tradeAmount: 0,
-          tradeDealCount: 0,
-          tradeDealCountTotal: 0,
-          username: "",
-          wallet: item,
-          deposit: 0,
-          withdraw: 0,
-        };
-      }
-      res.data[item].forEach((i: any) => {
-        map[item].avgDestory = map[item].avgDestory + i.avgDestory;
-        map[item].avgDestoryTotal =
-          map[item].avgDestoryTotal + i.avgDestoryTotal;
-        map[item].avgTradeAmount = map[item].avgTradeAmount + i.avgTradeAmount;
-        map[item].avgTradeAmountTotal =
-          map[item].avgTradeAmountTotal + i.avgTradeAmountTotal;
-        map[item].avgTradeDealCount =
-          map[item].avgTradeDealCount + i.avgTradeDealCount;
-        map[item].avgTradeDealCountTotal =
-          map[item].avgTradeDealCountTotal + i.avgTradeDealCountTotal;
-        map[item].buyNest = map[item].buyNest + i.buyNest;
-        map[item].buyNestTotal = map[item].buyNestTotal + i.buyNestTotal;
-        map[item].destory = map[item].destory + i.destory;
-        map[item].destoryTotal = map[item].destoryTotal + i.destoryTotal;
-        map[item].fee = map[item].fee + i.fee;
-        map[item].feeTotal = map[item].feeTotal + i.feeTotal;
-        map[item].sellNest = map[item].sellNest + i.sellNest;
-        map[item].sellNestTotal = map[item].sellNestTotal + i.sellNestTotal;
-        map[item].tradeAmount = map[item].tradeAmount + i.tradeAmount;
-        map[item].tradeDealCount = map[item].tradeDealCount + i.tradeDealCount;
-        map[item].tradeDealCountTotal =
-          map[item].tradeDealCountTotal + i.tradeDealCountTotal;
-        map[item].deposit = map[item].deposit + i.deposit;
-        map[item].withdraw = map[item].withdraw + i.withdraw;
-        if (map[item].username === "") {
-          map[item].username = i.username;
-        }
-      });
-    });
-    setInviteeInfo(Object?.values(map) || []);
-  }, [select, from, to, type]);
-
-  useEffect(() => {
-    getInviteeInfo();
-  }, [getInviteeInfo]);
 
   useEffect(() => {
     fetchList();
@@ -292,7 +209,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -423,7 +343,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -525,7 +448,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -647,7 +573,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -776,7 +705,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -905,7 +837,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -1027,7 +962,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -1148,7 +1086,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -1269,7 +1210,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -1390,7 +1334,10 @@ const CopyKOL = () => {
               <button
                 hidden={leftNode.key === "total"}
                 onClick={() => {
-                  setSelect(leftNode.key);
+                  window.open(
+                    `/futures/copykol/invitee?wallet=${leftNode.key}&from=${from}&to=${to}&type=${type}`,
+                    "_blank",
+                  );
                 }}
               >
                 {value}
@@ -1514,7 +1461,7 @@ const CopyKOL = () => {
           placeholder={"search..."}
           onChange={(e) => setFilter3(e.target.value)}
         />
-        <div>筛选后共 {users.length} 位 KOL</div>
+        <div>筛选后共 {users.length - 1} 位 KOL</div>
       </div>
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <Tab.List className="flex space-x-1 rounded-xl p-1">
