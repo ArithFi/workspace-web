@@ -39,8 +39,9 @@ const Send = () => {
     let url, chainId;
     if (mode === "test") {
       url = "https://me.nestfi.net/arithfi/op/user/airdrop";
-      chainId = 97;
+      chainId = 56;
     } else {
+      // TODO
       url = "https://db.nestfi.net/nestfi/op/user/airdrop";
       chainId = 56;
     }

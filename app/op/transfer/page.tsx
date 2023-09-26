@@ -29,7 +29,7 @@ const Send = () => {
     let url, chainId;
     if (mode === "test") {
       url = "https://me.nestfi.net/arithfi/op/user/transfer";
-      chainId = 97;
+      chainId = 56;
     } else {
       url = "https://db.nestfi.net/nestfi/op/user/transfer";
       chainId = 56;
