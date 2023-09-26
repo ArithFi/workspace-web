@@ -26,12 +26,11 @@ const Send = () => {
   const send = async () => {
     setStatus("loading");
     const mode = window.localStorage.getItem("mode") || "prod";
-    let url, chainId;
+    const url = "https://me.nestfi.net/arithfi/op/user/transfer";
+    let chainId;
     if (mode === "test") {
-      url = "https://me.nestfi.net/arithfi/op/user/transfer";
-      chainId = 56;
+      chainId = 97;
     } else {
-      url = "https://db.nestfi.net/nestfi/op/user/transfer";
       chainId = 56;
     }
 
