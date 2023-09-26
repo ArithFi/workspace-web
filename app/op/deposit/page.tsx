@@ -36,13 +36,11 @@ const Send = () => {
     }
 
     const mode = window.localStorage.getItem("mode") || "prod";
-    let url, chainId;
+    const url = "https://me.nestfi.net/arithfi/op/user/airdrop";
+    let chainId;
     if (mode === "test") {
-      url = "https://me.nestfi.net/arithfi/op/user/airdrop";
-      chainId = 56;
+      chainId = 97;
     } else {
-      // TODO
-      url = "https://db.nestfi.net/nestfi/op/user/airdrop";
       chainId = 56;
     }
 

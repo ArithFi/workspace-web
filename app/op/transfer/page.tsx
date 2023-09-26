@@ -72,12 +72,11 @@ const Send = () => {
   const getBalance = async (walletAddress: string, token: string) => {
     try {
       const mode = window.localStorage.getItem("mode") || "prod";
-      let url, chainId;
+      const url = "https://me.nestfi.net/arithfi/op/user/asset/by-address";
+      let chainId;
       if (mode === "test") {
-        url = "https://me.nestfi.net/arithfi/op/user/asset/by-address";
         chainId = 97;
       } else {
-        url = "";
         chainId = 56;
       }
       const data = await fetch(
