@@ -66,7 +66,7 @@ const KOL = () => {
     setLoading(true);
     const auth = window.localStorage.getItem("auth");
     const res = await fetch(
-      `https://me.nestfi.net/workbench-api/hedge/users/kol/info?from=${from}&to=${to}&type=${type}`,
+      `https://db.arithfi.com/workbench-api/hedge/users/kol/info?from=${from}&to=${to}&type=${type}`,
       {
         headers: {
           Authorization: `Bearer ${auth}`,

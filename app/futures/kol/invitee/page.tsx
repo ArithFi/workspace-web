@@ -22,7 +22,7 @@ const Page = () => {
     const map: any = {};
     const auth = window.localStorage.getItem("auth");
     const res = await fetch(
-      `https://me.nestfi.net/workbench-api/hedge/users/invitee/info?from=${from}&to=${to}&type=${type}&inviterWalletAddress=${select}`,
+      `https://db.arithfi.com/workbench-api/hedge/users/invitee/info?from=${from}&to=${to}&type=${type}&inviterWalletAddress=${select}`,
       {
         headers: {
           Authorization: `Bearer ${auth}`,

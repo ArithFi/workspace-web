@@ -19,7 +19,7 @@ const Avatar = () => {
       let formData = new FormData();
       formData.append("file", file!);
       await fetch(
-        `https://me.nestfi.net/workbench-api/nestfi/uploadFile?walletAddress=${address}`,
+        `https://db.arithfi.com/workbench-api/nestfi/uploadFile?walletAddress=${address}`,
         {
           method: "POST",
           mode: "cors",

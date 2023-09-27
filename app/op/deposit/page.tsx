@@ -36,7 +36,7 @@ const Send = () => {
     }
 
     const mode = window.localStorage.getItem("mode") || "prod";
-    const url = "https://me.nestfi.net/arithfi/op/user/airdrop";
+    const url = "https://db.arithfi.com/arithfi/op/user/airdrop";
     let chainId;
     if (mode === "test") {
       chainId = 97;

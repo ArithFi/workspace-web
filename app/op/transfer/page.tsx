@@ -26,7 +26,7 @@ const Send = () => {
   const send = async () => {
     setStatus("loading");
     const mode = window.localStorage.getItem("mode") || "prod";
-    const url = "https://me.nestfi.net/arithfi/op/user/transfer";
+    const url = "https://db.arithfi.com/arithfi/op/user/transfer";
     let chainId;
     if (mode === "test") {
       chainId = 97;
@@ -71,7 +71,7 @@ const Send = () => {
   const getBalance = async (walletAddress: string, token: string) => {
     try {
       const mode = window.localStorage.getItem("mode") || "prod";
-      const url = "https://me.nestfi.net/arithfi/op/user/asset/by-address";
+      const url = "https://db.arithfi.com/arithfi/op/user/asset/by-address";
       let chainId;
       if (mode === "test") {
         chainId = 97;
