@@ -20,14 +20,6 @@ const menu = [
         name: "期货交易仪表盘",
       },
       {
-        path: "/futures/copylink",
-        name: "带单链接仪表盘",
-      },
-      {
-        path: "/futures/copytx",
-        name: "带单交易仪表盘",
-      },
-      {
         path: "/futures/copytrading",
         name: "跟单仪表盘",
       },
