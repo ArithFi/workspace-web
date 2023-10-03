@@ -1,10 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const CheckAccount = () => {
   const router = useRouter();
+  const path = usePathname();
 
   const verify = async () => {
     const auth = window.localStorage.getItem("auth");
@@ -22,6 +23,9 @@ const CheckAccount = () => {
     ).then((res) => res.json());
     if (res.code !== 0) {
       router.push("/auth/login");
+    }
+    if (res.code === 0 && path === "/") {
+      router.push("/futures");
     }
   };
 
