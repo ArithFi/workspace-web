@@ -94,61 +94,70 @@ const Page = () => {
 
   return (
     <div>
-      <div>
+      <div className={"text-sm"}>
         Inviter: {select}, From: {from}, To: {to}
       </div>
-      <table>
+      <table className={"table-auto mt-4"}>
         <thead>
           {sortedData.length > 0 && (
             <tr>
               <th
                 onClick={() => sortBy("wallet")}
-                className={"w-40 text-start"}
+                className={"w-40 text-start text-sm"}
               >
                 地址
               </th>
               <th
                 onClick={() => sortBy("username")}
-                className={"w-40 text-start"}
+                className={"w-40 text-start text-sm"}
               >
                 用户名
               </th>
               <th
                 onClick={() => sortBy("tradeAmount")}
-                className={"w-40 text-start"}
+                className={"w-40 text-start text-sm"}
               >
                 总交易量
               </th>
               <th
                 onClick={() => sortBy("tradeDealCount")}
-                className={"w-40 text-start"}
+                className={"w-40 text-start text-sm"}
               >
                 交易次数
               </th>
               <th
                 onClick={() => sortBy("destory")}
-                className={"w-40 text-start"}
+                className={"w-40 text-start text-sm"}
               >
                 销毁
               </th>
-              <th onClick={() => sortBy("fee")} className={"w-40 text-start"}>
+              <th
+                onClick={() => sortBy("fee")}
+                className={"w-40 text-start text-sm"}
+              >
                 服务费
               </th>
               <th
                 onClick={() => sortBy("buyNest")}
-                className={"w-40 text-start"}
+                className={"w-40 text-start text-sm"}
               >
                 买币
               </th>
               <th
                 onClick={() => sortBy("sellNest")}
-                className={"w-40 text-start"}
+                className={"w-40 text-start text-sm"}
               >
                 卖币
               </th>
               <th
                 onClick={() => sortBy("deposit")}
-                className={"w-40 text-start"}
+                className={"w-40 text-start text-sm"}
+              >
+                充值
+              </th>
+              <th
+                onClick={() => sortBy("deposit")}
+                className={"w-40 text-start text-sm"}
               >
                 提现
               </th>
@@ -159,16 +168,20 @@ const Page = () => {
           {sortedData.length > 0 &&
             sortedData?.map((item: any, index) => (
               <tr key={index}>
-                <td>{item.wallet}</td>
-                <td>{item.username}</td>
-                <td>{item.tradeAmount.toLocaleString()}</td>
-                <td>{item.tradeDealCount.toLocaleString()}</td>
-                <td>{item.destory.toLocaleString()}</td>
-                <td>{item.fee.toLocaleString()}</td>
-                <td>{item.buyNest.toLocaleString()}</td>
-                <td>{item.sellNest.toLocaleString()}</td>
-                <td>{item.deposit.toLocaleString()}</td>
-                <td>{item.withdraw.toLocaleString()}</td>
+                <td className={"text-sm"}>{item.wallet}</td>
+                <td className={"text-sm"}>{item.username}</td>
+                <td className={"text-sm"}>
+                  {item.tradeAmount.toLocaleString()}
+                </td>
+                <td className={"text-sm"}>
+                  {item.tradeDealCount.toLocaleString()}
+                </td>
+                <td className={"text-sm"}>{item.destory.toLocaleString()}</td>
+                <td className={"text-sm"}>{item.fee.toLocaleString()}</td>
+                <td className={"text-sm"}>{item.buyNest.toLocaleString()}</td>
+                <td className={"text-sm"}>{item.sellNest.toLocaleString()}</td>
+                <td className={"text-sm"}>{item.deposit.toLocaleString()}</td>
+                <td className={"text-sm"}>{item.withdraw.toLocaleString()}</td>
               </tr>
             ))}
         </tbody>
