@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { TailwindIndicator } from "@/components/TailwindIndicator";
 import { ReactNode } from "react";
+import CheckAccount from "@/components/CheckAccount";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -24,6 +25,7 @@ export default function RootLayout(props: { children: ReactNode }) {
     <html lang="en" className={inter.className}>
       <body className={`h-screen w-screen`}>
         <TailwindIndicator />
+        <CheckAccount />
         {props.children}
       </body>
     </html>
