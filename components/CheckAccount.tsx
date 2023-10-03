@@ -20,9 +20,7 @@ const CheckAccount = () => {
         }),
       },
     ).then((res) => res.json());
-    if (res.code === 0) {
-      router.push("/futures");
-    } else {
+    if (res.code !== 0) {
       router.push("/auth/login");
     }
   };
