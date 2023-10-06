@@ -53,10 +53,6 @@ const menu = [
         path: "/op/transfer",
         name: "账户划转",
       },
-      {
-        path: "/op/avatar",
-        name: "KOL头像设置",
-      },
     ],
   },
 ];
