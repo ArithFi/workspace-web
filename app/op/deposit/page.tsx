@@ -7,7 +7,7 @@ const Send = () => {
   const [status, setStatus] = useState("idle");
   const [addresses, setAddresses] = useState("");
   const [form, setForm] = useState({
-    amount: 0,
+    amount: "0",
     info: "",
     ordertype: "DEPOSIT",
     block: false,
@@ -56,6 +56,7 @@ const Send = () => {
           ...form,
           walletAddress: addressArray,
           chainId: chainId,
+          amount: Number(form.amount),
         }),
       })
         .then((res) => res.json())
@@ -98,7 +99,7 @@ const Send = () => {
           onChange={(e) => {
             setForm({
               ...form,
-              amount: Number(e.target.value),
+              amount: e.target.value,
             });
           }}
           className={"border p-2"}
