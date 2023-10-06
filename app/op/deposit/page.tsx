@@ -7,7 +7,7 @@ const Send = () => {
   const [status, setStatus] = useState("idle");
   const [addresses, setAddresses] = useState("");
   const [form, setForm] = useState({
-    amount: "0",
+    amount: "",
     info: "",
     ordertype: "DEPOSIT",
     block: false,

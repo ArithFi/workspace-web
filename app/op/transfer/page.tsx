@@ -6,7 +6,7 @@ import { isAddress } from "@ethersproject/address";
 const Send = () => {
   const [status, setStatus] = useState("idle");
   const [form, setForm] = useState({
-    amount: 0,
+    amount: "",
     info: "",
     ordertype: "BLOCK_TO_AVAILABLE",
     walletAddress: "",
@@ -45,6 +45,7 @@ const Send = () => {
         body: JSON.stringify({
           ...form,
           chainId: chainId,
+          amount: Number(form.amount),
         }),
       })
         .then((res) => res.json())
@@ -143,7 +144,7 @@ const Send = () => {
           onChange={(e) => {
             setForm({
               ...form,
-              amount: Number(e.target.value),
+              amount: e.target.value,
             });
           }}
           className={"border p-2"}
