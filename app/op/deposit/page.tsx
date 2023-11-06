@@ -9,7 +9,7 @@ const Send = () => {
   const [form, setForm] = useState({
     amount: "",
     info: "",
-    ordertype: "DEPOSIT",
+    ordertype: "WALLET_DEPOSIT",
     block: false,
     blockReason: "",
   });
@@ -116,8 +116,14 @@ const Send = () => {
             })
           }
         >
-          <option value={"DEPOSIT"}>DEPOSIT</option>
-          <option value={"Freeze Deposit"}>Freeze Deposit</option>
+          <option value={"WALLET_DEPOSIT"}>WALLET DEPOSIT</option>
+          <option value={"AIRDROP"}>AIRDROP</option>
+          <option value={"SALARY"}>SALARY</option>
+          <option value={"MARKING"}>MARKING</option>
+          <option value={"REFERRAL"}>REFERRAL</option>
+          <option value={"PROFIT_SHARING"}>PROFIT SHARING</option>
+          <option value={"RETURN"}>RETURN</option>
+          <option value={"COPY_TO_AVAILABLE"}>COPY TO AVAILABLE</option>
         </select>
       </div>
       <div className={"w-full flex flex-col gap-2"}>
