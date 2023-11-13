@@ -9,7 +9,7 @@ const Send = () => {
   const [form, setForm] = useState({
     amount: "",
     info: "",
-    ordertype: "WALLET_DEPOSIT",
+    ordertype: "DEPOSIT",
     block: false,
     blockReason: "",
   });
@@ -104,55 +104,6 @@ const Send = () => {
           }}
           className={"border p-2"}
         />
-      </div>
-      <div className={"w-full flex flex-col gap-2"}>
-        <label>充值类型</label>
-        <select
-          className={"focus:outline-0 bg-gray-100 p-2 rounded"}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              ordertype: e.target.value,
-            })
-          }
-        >
-          <option value={"WALLET_DEPOSIT"}>WALLET DEPOSIT</option>
-          <option value={"AIRDROP"}>AIRDROP</option>
-          <option value={"SALARY"}>SALARY</option>
-          <option value={"MARKING"}>MARKING</option>
-          <option value={"REFERRAL"}>REFERRAL</option>
-          <option value={"PROFIT_SHARING"}>PROFIT SHARING</option>
-          <option value={"RETURN"}>RETURN</option>
-          <option value={"COPY_TO_AVAILABLE"}>COPY TO AVAILABLE</option>
-        </select>
-      </div>
-      <div className={"w-full flex flex-col gap-2"}>
-        <label>充值账户</label>
-        <select
-          className={"focus:outline-0 bg-gray-100 p-2 rounded"}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              block: e.target.value === "block",
-            })
-          }
-        >
-          <option value={"normal"}>可用账户</option>
-          <option value={"block"}>冻结账户</option>
-        </select>
-        {form.block && (
-          <input
-            value={form.blockReason}
-            placeholder={"冻结原因"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                blockReason: e.target.value,
-              })
-            }
-            className={"border p-2"}
-          />
-        )}
       </div>
       <div className={"w-full flex flex-col gap-2"}>
         <label>备注</label>
