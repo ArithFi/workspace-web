@@ -153,6 +153,12 @@ const Page = () => {
                 onClick={() => sortBy("deposit")}
                 className={"w-40 text-start"}
               >
+                充值
+              </th>
+              <th
+                onClick={() => sortBy("withdraw")}
+                className={"w-40 text-start"}
+              >
                 提现
               </th>
             </tr>
