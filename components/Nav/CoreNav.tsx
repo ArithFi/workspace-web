@@ -56,6 +56,32 @@ const menu = [
       },
     ],
   },
+  {
+    path: "/roi",
+    name: "成本和绩效",
+    children: [
+      {
+        path: "/roi/product",
+        name: "产品部门",
+      },
+      {
+        path: "/roi/brand",
+        name: "品牌部门",
+      },
+      {
+        path: "/roi/business",
+        name: "商务部门",
+      },
+      {
+        path: "/roi/develop",
+        name: "技术部门",
+      },
+      {
+        path: "/roi/community",
+        name: "社区部门",
+      },
+    ],
+  },
 ];
 
 const CoreNav = () => {
