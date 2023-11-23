@@ -65,16 +65,16 @@ const menu = [
         name: "产品部门",
       },
       {
+        path: "/roi/develop",
+        name: "技术部门",
+      },
+      {
         path: "/roi/brand",
         name: "品牌部门",
       },
       {
         path: "/roi/business",
         name: "商务部门",
-      },
-      {
-        path: "/roi/develop",
-        name: "技术部门",
       },
       {
         path: "/roi/community",
