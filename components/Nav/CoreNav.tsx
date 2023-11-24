@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
 
 const menu = [
   {
@@ -59,6 +61,7 @@ const menu = [
   {
     path: "/roi",
     name: "成本和绩效",
+    role: "frank",
     children: [
       {
         path: "/roi/product",
@@ -86,11 +89,28 @@ const menu = [
 
 const CoreNav = () => {
   const pathname = usePathname();
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    if (!username) {
+      const jwt = window.localStorage.getItem("auth");
+      if (jwt) {
+        const decode = jwtDecode(jwt);
+        // @ts-ignore
+        setUsername(decode?.username || "-");
+      }
+    }
+  }, [username]);
 
   return (
     <div className={"space-y-8"}>
       {menu.map((item, index) => (
-        <div key={index}>
+        <div
+          key={index}
+          className={`${
+            item?.role === "frank" && username !== "frank" ? "hidden" : ""
+          }`}
+        >
           <div className={"flex space-x-2 items-center"}>
             <div className={`bg-white w-4 h-5`}></div>
             <div className={`text-xs font-semibold "text-gray-800"`}>
