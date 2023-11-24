@@ -52,10 +52,6 @@ const menu = [
         path: "/op/deposit",
         name: "账户充值",
       },
-      {
-        path: "/op/transfer",
-        name: "账户划转",
-      },
     ],
   },
   {
