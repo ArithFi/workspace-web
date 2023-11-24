@@ -1,17 +1,23 @@
+"use client";
 import Account from "@/components/Account";
 import CoreNav from "@/components/Nav/CoreNav";
-import RecentNav from "@/components/Nav/RecentNav";
-import { FC } from "react";
 
-const Navigation: FC<{
-  active: string;
-}> = (props) => {
+const Navigation = () => {
   return (
     <div
       className={"w-full max-w-[260px] h-full border-r px-8 py-4 space-y-10"}
     >
       <Account />
       <CoreNav />
+      <button
+        className={"px-6 font-medium text-sm text-red-500"}
+        onClick={() => {
+          window.localStorage.removeItem("auth");
+          window.location.reload();
+        }}
+      >
+        退出登陆
+      </button>
     </div>
   );
 };
