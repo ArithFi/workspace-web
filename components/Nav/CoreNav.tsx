@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import jwtDecode from "jwt-decode";
 
 const menu = [
@@ -89,27 +89,23 @@ const menu = [
 
 const CoreNav = () => {
   const pathname = usePathname();
-  const [username, setUsername] = useState("");
 
-  useEffect(() => {
-    if (!username) {
-      const jwt = window.localStorage.getItem("auth");
-      if (jwt) {
-        const decode = jwtDecode(jwt);
-        // @ts-ignore
-        setUsername(decode?.username || "-");
-      }
+  const username = useMemo(() => {
+    const jwt = window.localStorage.getItem("auth");
+    if (jwt) {
+      const decode = jwtDecode(jwt);
+      // @ts-ignore
+      return decode?.username;
     }
-  }, [username]);
+    return "-";
+  }, []);
 
   return (
     <div className={"space-y-8"}>
       {menu.map((item, index) => (
         <div
           key={index}
-          className={`${
-            item?.role === "frank" && username !== "frank" ? "hidden" : ""
-          }`}
+          className={`${item?.role && username !== item.role ? "hidden" : ""}`}
         >
           <div className={"flex space-x-2 items-center"}>
             <div className={`bg-white w-4 h-5`}></div>
