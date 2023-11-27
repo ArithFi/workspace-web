@@ -14,6 +14,7 @@ const Send = () => {
     blockReason: "",
   });
   const [token, setToken] = useState("");
+  const [confirm, setConfirm] = useState("");
 
   const addressArray = useMemo(
     () =>
@@ -83,9 +84,10 @@ const Send = () => {
   return (
     <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
       <div className={"w-full flex flex-col gap-2"}>
-        <label>充值地址:</label>
+        <label className={"text-sm font-medium"}>充值地址:</label>
         <textarea
           value={addresses}
+          placeholder={"充值地址"}
           onChange={(e) => {
             setAddresses(e.target.value);
           }}
@@ -93,9 +95,10 @@ const Send = () => {
         />
       </div>
       <div className={"w-full flex flex-col gap-2"}>
-        <label>充值数量</label>
+        <label className={"text-sm font-medium"}>充值数量</label>
         <input
           value={form.amount}
+          placeholder={"充值数量"}
           onChange={(e) => {
             setForm({
               ...form,
@@ -106,7 +109,7 @@ const Send = () => {
         />
       </div>
       <div className={"w-full flex flex-col gap-2"}>
-        <label>备注</label>
+        <label className={"text-sm font-medium"}>备注</label>
         <input
           value={form.info}
           placeholder={"备注"}
@@ -120,7 +123,7 @@ const Send = () => {
         />
       </div>
       <div className={"w-full flex flex-col gap-2"}>
-        <label>签名</label>
+        <label className={"text-sm font-medium"}>签名</label>
         <input
           value={token}
           placeholder={"Token"}
@@ -128,16 +131,31 @@ const Send = () => {
           onChange={(e) => setToken(e.target.value)}
         />
       </div>
-      <button
-        className={"bg-yellow-500 p-2 rounded disabled:bg-gray-200"}
-        onClick={send}
-        disabled={!isOk || !addressArray?.length}
-      >
-        {status === "idle" && "Send Messages"}
-        {status === "success" && "Success"}
-        {status === "error" && "Error"}
-        {status === "loading" && "Loading"}
-      </button>
+      <div className={"w-full flex flex-col gap-2 mt-16"}>
+        <label className={"text-sm font-medium"}>确认本次充值</label>
+        <input
+          value={confirm}
+          placeholder={"请重复输入充值金额"}
+          className={`border p-2 ${
+            confirm !== form.amount && "border-red-500"
+          } rounded`}
+          onChange={(e) => setConfirm(e.target.value)}
+        />
+      </div>
+      <div className={"flex justify-end"}>
+        <button
+          className={
+            "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4"
+          }
+          onClick={send}
+          disabled={!isOk || !addressArray?.length || confirm !== form.amount}
+        >
+          {status === "idle" && "充值"}
+          {status === "success" && "充值成功"}
+          {status === "error" && "充值失败"}
+          {status === "loading" && "充值中..."}
+        </button>
+      </div>
     </div>
   );
 };
