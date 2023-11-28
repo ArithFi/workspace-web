@@ -64,17 +64,20 @@ const Send = () => {
         .then((res) => res.value);
       if (res) {
         setStatus("success");
+        setConfirm("");
         setTimeout(() => {
           setStatus("idle");
         }, 3000);
       } else {
         setStatus("error");
+        setConfirm("");
         setTimeout(() => {
           setStatus("idle");
         }, 3000);
       }
     } catch (e) {
       setStatus("error");
+      setConfirm("");
       setTimeout(() => {
         setStatus("idle");
       }, 3000);
