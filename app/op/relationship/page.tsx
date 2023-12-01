@@ -90,7 +90,10 @@ const CSR = () => {
         <button
           onClick={send}
           disabled={
-            !isAddress(klAddress) || !userAddresses || confirm !== klAddress
+            !isAddress(klAddress) ||
+            !userAddresses ||
+            confirm !== klAddress ||
+            status.status === "loading"
           }
           className={
             "bg-yellow-500 text-white p-2 disabled:opacity-50 disabled:cursor-auto shrink-0"
