@@ -52,6 +52,10 @@ const menu = [
         path: "/op/deposit",
         name: "账户充值",
       },
+      {
+        path: "/op/relationship",
+        name: "用户关系管理",
+      },
     ],
   },
   {
