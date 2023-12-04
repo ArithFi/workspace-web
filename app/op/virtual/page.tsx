@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { isAddress } from "@ethersproject/address";
 
 const CSR = () => {
@@ -15,26 +15,21 @@ const CSR = () => {
   const send = async () => {
     setStatus("loading");
     const mode = window.localStorage.getItem("mode") || "prod";
-    const url = "https://db.arithfi.com/arithfi/op/user/setVirtualAccount";
     let chainId;
     if (mode === "test") {
       chainId = 97;
     } else {
       chainId = 56;
     }
+    const url = `https://db.arithfi.com/arithfi/op/user/setVirtualAccount?targetAddress=${form.targetAddress}&bindAddress=${form.bindAddress}&chainId=${chainId}`;
+
     try {
       const res = await fetch(url, {
         method: "POST",
         headers: {
           Authorization: `${token}`,
-          "Content-Type": "application/json",
           token: `${Math.ceil(new Date().getTime() / 1000)}`,
         },
-        body: JSON.stringify({
-          chainId: chainId,
-          targetAddress: form.targetAddress,
-          bindAddress: form.bindAddress,
-        }),
       })
         .then((res) => res.json())
         .then((res) => res.value);
