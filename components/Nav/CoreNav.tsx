@@ -56,6 +56,10 @@ const menu = [
         path: "/op/relationship",
         name: "用户关系管理",
       },
+      {
+        path: "/op/virtual",
+        name: "虚拟账号管理",
+      },
     ],
   },
   {

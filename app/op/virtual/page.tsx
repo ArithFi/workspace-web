@@ -1,0 +1,121 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { isAddress } from "@ethersproject/address";
+
+const CSR = () => {
+  const [status, setStatus] = useState("idle");
+  const [form, setForm] = useState({
+    targetAddress: "",
+    bindAddress: "",
+  });
+  const [token, setToken] = useState("");
+  const [confirm, setConfirm] = useState("");
+
+  const send = async () => {
+    setStatus("loading");
+    const mode = window.localStorage.getItem("mode") || "prod";
+    const url = "https://db.arithfi.com/arithfi/op/user/setVirtualAccount";
+    let chainId;
+    if (mode === "test") {
+      chainId = 97;
+    } else {
+      chainId = 56;
+    }
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+          token: `${Math.ceil(new Date().getTime() / 1000)}`,
+        },
+        body: JSON.stringify({
+          chainId: chainId,
+          targetAddress: form.targetAddress,
+          bindAddress: form.bindAddress,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => res.value);
+      if (res) {
+        setStatus("success");
+        setConfirm("");
+        setTimeout(() => {
+          setStatus("idle");
+        }, 3000);
+      } else {
+        setStatus("error");
+        setConfirm("");
+        setTimeout(() => {
+          setStatus("idle");
+        }, 3000);
+      }
+    } catch (e) {
+      setStatus("error");
+      setConfirm("");
+      setTimeout(() => {
+        setStatus("idle");
+      }, 3000);
+    }
+  };
+
+  return (
+    <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
+      <div className={"w-full flex flex-col gap-2"}>
+        <label className={"text-sm font-medium"}>目标地址</label>
+        <input
+          value={form.targetAddress}
+          placeholder={"TargetAddress"}
+          className={"border p-2"}
+          onChange={(e) => setForm({ ...form, targetAddress: e.target.value })}
+        />
+      </div>
+      <div className={"w-full flex flex-col gap-2"}>
+        <label className={"text-sm font-medium"}>绑定地址</label>
+        <input
+          value={form.bindAddress}
+          placeholder={"BindAddress"}
+          className={"border p-2"}
+          onChange={(e) => setForm({ ...form, bindAddress: e.target.value })}
+        />
+      </div>
+      <div className={"w-full flex flex-col gap-2"}>
+        <label className={"text-sm font-medium"}>签名</label>
+        <input
+          value={token}
+          placeholder={"Token"}
+          className={"border p-2"}
+          onChange={(e) => setToken(e.target.value)}
+        />
+      </div>
+      <div className={"w-full flex flex-col gap-2 mt-16"}>
+        <label className={"text-sm font-medium"}>确认本次设置</label>
+        <input
+          value={confirm}
+          placeholder={"请重复目标地址"}
+          className={`border p-2 ${
+            confirm !== form.targetAddress && "border-red-500"
+          } rounded`}
+          onChange={(e) => setConfirm(e.target.value)}
+        />
+      </div>
+      <div className={"flex justify-end"}>
+        <button
+          className={
+            "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4"
+          }
+          onClick={send}
+          disabled={confirm !== form.targetAddress}
+        >
+          {status === "idle" && "设置"}
+          {status === "success" && "设置成功"}
+          {status === "error" && "设置失败"}
+          {status === "loading" && "设置中..."}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CSR;
