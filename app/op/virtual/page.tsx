@@ -106,7 +106,11 @@ const CSR = () => {
             "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4"
           }
           onClick={send}
-          disabled={confirm !== form.targetAddress}
+          disabled={
+            confirm !== form.targetAddress ||
+            !isAddress(form.targetAddress) ||
+            !isAddress(form.bindAddress)
+          }
         >
           {status === "idle" && "设置"}
           {status === "success" && "设置成功"}
