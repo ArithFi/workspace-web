@@ -58,7 +58,7 @@ const CSR = () => {
   return (
     <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
       <div className={"w-full flex flex-col gap-2"}>
-        <label className={"text-sm font-medium"}>目标地址</label>
+        <label className={"text-sm font-medium"}>交易地址（无法提现）</label>
         <input
           value={form.targetAddress}
           placeholder={"TargetAddress"}
@@ -67,7 +67,7 @@ const CSR = () => {
         />
       </div>
       <div className={"w-full flex flex-col gap-2"}>
-        <label className={"text-sm font-medium"}>绑定地址</label>
+        <label className={"text-sm font-medium"}>提现地址</label>
         <input
           value={form.bindAddress}
           placeholder={"BindAddress"}
@@ -88,7 +88,7 @@ const CSR = () => {
         <label className={"text-sm font-medium"}>确认本次设置</label>
         <input
           value={confirm}
-          placeholder={"请重复目标地址"}
+          placeholder={"请重复交易地址（无法提现）"}
           className={`border p-2 ${
             confirm !== form.targetAddress && "border-red-500"
           } rounded`}
