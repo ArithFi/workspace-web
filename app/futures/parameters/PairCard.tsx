@@ -1,6 +1,7 @@
 "use client";
 import useSWR from "swr";
-import { FC } from "react";
+import { FC, useMemo } from "react";
+import { usePrevious } from "@uidotdev/usehooks";
 
 const PairCard: FC<{
   pair: string;
@@ -57,10 +58,22 @@ const Item: FC<{
   title: string;
   value: string | number;
 }> = ({ title, value }) => {
+  const previousColor = usePrevious(value);
+
+  const style = useMemo(() => {
+    if (value > previousColor) {
+      return "text-green-500 font-bold";
+    } else if (value < previousColor) {
+      return "text-red-500 font-bold";
+    } else {
+      return "text-gray-800";
+    }
+  }, [value, previousColor]);
+
   return (
-    <div className={"flex justify-between hover:text-red-500 hover:font-bold"}>
+    <div className={"flex justify-between hover:underline"}>
       <div className={"text-xs text-gray-800"}>{title}</div>
-      <div className={"text-xs"}>{value}</div>
+      <div className={`text-xs ${style}`}>{value}</div>
     </div>
   );
 };
