@@ -94,23 +94,27 @@ const menu = [
 const CoreNav = () => {
   const pathname = usePathname();
 
-  const username = useMemo(() => {
+  const filterMenu = useMemo(() => {
+    let username = "-";
     const jwt = window.localStorage.getItem("auth");
     if (jwt) {
       const decode = jwtDecode(jwt);
       // @ts-ignore
-      return decode?.username;
+      username = decode?.username;
     }
-    return "-";
+    return menu.filter((item) => {
+      if (item.role) {
+        return item.role === username;
+      } else {
+        return true;
+      }
+    });
   }, []);
 
   return (
     <div className={"space-y-8"}>
-      {menu.map((item, index) => (
-        <div
-          key={index}
-          className={`${item?.role && username !== item.role ? "hidden" : ""}`}
-        >
+      {filterMenu.map((item, index) => (
+        <div key={index}>
           <div className={"flex space-x-2 items-center"}>
             <div className={`bg-white w-4 h-5`}></div>
             <div className={`text-xs font-semibold "text-gray-800"`}>
