@@ -37,7 +37,7 @@ const PairCard: FC<{
           {new Date(data?.ts).toLocaleString()}
         </div>
       </div>
-      <Item title={"交易对常数, R0"} value={data?.r0} />
+      <Item title={"交易对常数, r0"} value={data?.r0} />
       <Item title={"交易对常数, c"} value={data?.c} />
       <Item title={"看涨仓位, ml"} value={data?.ml} />
       <Item title={"看跌仓位, ms"} value={data?.ms} />
