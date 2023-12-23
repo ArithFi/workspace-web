@@ -38,6 +38,10 @@ const menu = [
         path: "/futures/copykol",
         name: "Copy KOL 交叉表",
       },
+      {
+        path: "/futures/parameters",
+        name: "动态持仓费参数",
+      },
     ],
   },
   {
