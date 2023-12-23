@@ -17,8 +17,14 @@ const PairCard: FC<{
 
   return (
     <div className={"border w-full p-3 text-sm"}>
-      <div>{new Date(data?.ts).toLocaleString()}</div>
-      <div>Pair: {data?.product}</div>
+      <div className={"flex justify-between items-center"}>
+        <div className={"font-bold text-lg text-gray-800"}>
+          Pair: {data?.product}
+        </div>
+        <div className={"text-xs text-gray-500"}>
+          {new Date(data?.ts).toLocaleString()}
+        </div>
+      </div>
       <div>R0: {data?.r0}</div>
       <div>c: {data?.c}</div>
       <div>ml: {data?.ml}</div>
