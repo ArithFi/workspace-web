@@ -13,6 +13,9 @@ const PairCard: FC<{
       fetch(url)
         .then((res) => res.json())
         .then((data) => data?.value),
+    {
+      refreshInterval: 3_000,
+    },
   );
 
   return (
@@ -27,7 +30,7 @@ const PairCard: FC<{
             "font-bold text-lg text-gray-800 group-hover:text-[#EAB308]"
           }
         >
-          Pair: {data?.product}
+          {data?.product}
         </div>
         <div className={"text-xs text-gray-500"}>
           {new Date(data?.ts).toLocaleString()}
@@ -56,7 +59,7 @@ const Item: FC<{
 }> = ({ title, value }) => {
   return (
     <div className={"flex justify-between hover:text-red-500 hover:font-bold"}>
-      <div className={"text-xs"}>{title}</div>
+      <div className={"text-xs text-gray-800"}>{title}</div>
       <div className={"text-xs"}>{value}</div>
     </div>
   );
