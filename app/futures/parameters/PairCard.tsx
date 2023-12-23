@@ -33,17 +33,17 @@ const PairCard: FC<{
           {new Date(data?.ts).toLocaleString()}
         </div>
       </div>
-      <Item title={"交易对常数, R0"} value={data?.r0.toFixed(6)} />
-      <Item title={"交易对常数, c"} value={data?.c.toFixed(6)} />
-      <Item title={"看涨仓位, ml"} value={data?.ml.toFixed(6)} />
-      <Item title={"看跌仓位, ms"} value={data?.ms.toFixed(6)} />
+      <Item title={"交易对常数, R0"} value={data?.r0} />
+      <Item title={"交易对常数, c"} value={data?.c} />
+      <Item title={"看涨仓位, ml"} value={data?.ml} />
+      <Item title={"看跌仓位, ms"} value={data?.ms} />
       <Item title={"看涨持仓费率积分系数, rl"} value={data?.rl} />
       <Item title={"看跌持仓费率积分系数, rs"} value={data?.rs} />
       <Item title={"距离上次更新的秒数, dt"} value={data?.dt} />
-      <Item title={"上次更新的rtl, prevRtl"} value={data?.prevRtl.toFixed(6)} />
-      <Item title={"上次更新的rts, prevRts"} value={data?.prevRts.toFixed(6)} />
-      <Item title={"看涨动态持仓费的积分, rtl"} value={data?.rtl.toFixed(6)} />
-      <Item title={"看跌动态持仓费的积分, rts"} value={data?.rts.toFixed(6)} />
+      <Item title={"上次更新的rtl, prevRtl"} value={data?.prevRtl.toFixed(9)} />
+      <Item title={"上次更新的rts, prevRts"} value={data?.prevRts.toFixed(9)} />
+      <Item title={"看涨动态持仓费的积分, rtl"} value={data?.rtl.toFixed(9)} />
+      <Item title={"看跌动态持仓费的积分, rts"} value={data?.rts.toFixed(9)} />
     </div>
   );
 };
