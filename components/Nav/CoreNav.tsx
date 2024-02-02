@@ -49,6 +49,10 @@ const menu = [
     name: "运营工具",
     children: [
       {
+        path: "/op/atfscan",
+        name: "ATFScan",
+      },
+      {
         path: "/op/send",
         name: "消息推送",
       },
