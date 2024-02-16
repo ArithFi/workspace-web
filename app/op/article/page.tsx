@@ -150,7 +150,13 @@ const Article = () => {
               });
             }}
           >
-            <option value={"en"}>EN</option>
+            <option value={"en"}>英语</option>
+            <option value={"pt"}>葡萄牙</option>
+            <option value={"ko"}>韩语</option>
+            <option value={"tr"}>土耳其语</option>
+            <option value={"es"}>西班牙语</option>
+            <option value={"vi"}>越南语言</option>
+            <option value={"ru"}>俄罗斯语</option>
           </select>
         </div>
         <div className={"w-full flex flex-col gap-2"}>
