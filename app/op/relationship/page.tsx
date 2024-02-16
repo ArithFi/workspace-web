@@ -74,7 +74,11 @@ const CSR = () => {
         value={userAddresses}
         onChange={(e) => setUserAddresses(e.target.value)}
       />
-      <div className={"flex items-center gap-2 justify-between"}>
+      <div
+        className={
+          "flex items-center gap-2 justify-between bg-gray-50 p-3 rounded-lg"
+        }
+      >
         <div className={"shrink-0 text-sm"}>关系层级</div>
         <select className={"border p-1 w-20"}>
           <option value={"1"}>1</option>

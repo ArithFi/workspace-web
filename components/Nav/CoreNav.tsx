@@ -68,6 +68,14 @@ const menu = [
         path: "/op/virtual",
         name: "虚拟账号管理",
       },
+      {
+        path: "/op/article",
+        name: "文章管理",
+      },
+      {
+        path: "/op/release",
+        name: "App版本发布说明",
+      },
     ],
   },
   {
