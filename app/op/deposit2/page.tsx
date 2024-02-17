@@ -29,7 +29,7 @@ const Send = () => {
     [addressArray],
   );
 
-  const { data } = useSWR(
+  const { data, mutate } = useSWR(
     token
       ? `https://db.nestfi.net/arithfi_main/maintains/listAirdrop?walletAddress=${form.promoter}`
       : undefined,
@@ -43,8 +43,10 @@ const Send = () => {
       })
         .then((res) => res.json())
         .then((res) => res.data),
+    {
+      refreshInterval: 10_000,
+    },
   );
-  console.log(data);
 
   const send = async () => {
     setStatus("loading");
@@ -83,12 +85,14 @@ const Send = () => {
         .then((res) => res.data);
       if (res) {
         setStatus("success");
+        await mutate();
         setConfirm("");
         setTimeout(() => {
           setStatus("idle");
         }, 3000);
       } else {
         setStatus("error");
+        await mutate();
         setConfirm("");
         setTimeout(() => {
           setStatus("idle");
@@ -96,11 +100,79 @@ const Send = () => {
       }
     } catch (e) {
       setStatus("error");
+      await mutate();
       setConfirm("");
       setTimeout(() => {
         setStatus("idle");
       }, 3000);
     }
+  };
+
+  const DATA = [
+    {
+      id: 0,
+      walletAddress: "walletAddress",
+      chainId: 56,
+      amount: 1000,
+      orderType: "orderType",
+      batchNo: "batchNo",
+      info: "info",
+      status: 0,
+      promoter: "promoter",
+      promoteAt: "2024-02-17T06:52:56.530Z",
+      auditor: "auditor",
+      auditAt: "2024-02-17T06:52:56.530Z",
+    },
+  ];
+
+  const agree = async (id: number, batchNo: string) => {
+    const mode = window.localStorage.getItem("mode") || "prod";
+    let url;
+    if (mode === "test") {
+      url = "https://db.nestfi.net/arithfi/maintains/confirmAirdrop";
+    } else {
+      url = "https://db.nestfi.net/arithfi_main/maintains/confirmAirdrop";
+    }
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `${token}`,
+        "Content-Type": "application/json",
+        token: `${Math.ceil(new Date().getTime() / 1000)}`,
+      },
+      body: JSON.stringify({
+        ids: [id],
+        batchNo: batchNo,
+        walletAddress: form.promoter,
+      }),
+    });
+    await mutate();
+  };
+
+  const disagree = async (id: number, batchNo: string) => {
+    const mode = window.localStorage.getItem("mode") || "prod";
+    let url;
+    if (mode === "test") {
+      url = "https://db.nestfi.net/arithfi/maintains/rejectAirdrop";
+    } else {
+      url = "https://db.nestfi.net/arithfi_main/maintains/rejectAirdrop";
+    }
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `${token}`,
+        "Content-Type": "application/json",
+        token: `${Math.ceil(new Date().getTime() / 1000)}`,
+      },
+      body: JSON.stringify({
+        ids: [id],
+        batchNo: batchNo,
+        walletAddress: form.promoter,
+      }),
+    });
+    await mutate();
   };
 
   return (
@@ -194,40 +266,117 @@ const Send = () => {
           </button>
         </div>
       </div>
-      <div className={"w-full space-y-6 h-[80vh] overflow-scroll pr-4"}>
-        {data &&
-          data.map(
-            (
-              item: {
-                id: number;
-                createTime: string;
-                updateTime: string;
-                date: string;
-                walletAddress: string;
-                chainId: number;
-                settlementAmount: number;
-                settlementCurrency: string;
-                type: string;
-                hash: string;
-                status: number;
-              },
-              index: number,
-            ) => (
-              <div key={index}>
-                <div>{item.id}</div>
-                <div>{item.createTime}</div>
-                <div>{item.updateTime}</div>
-                <div>{item.date}</div>
-                <div>{item.walletAddress}</div>
-                <div>{item.chainId}</div>
-                <div>{item.settlementAmount}</div>
-                <div>{item.settlementCurrency}</div>
-                <div>{item.type}</div>
-                <div>{item.hash}</div>
-                <div>{item.status}</div>
-              </div>
-            ),
-          )}
+      <div className={"w-full space-y-6 h-[80vh] overflow-scroll pr-4 border"}>
+        <table className="table-auto w-full">
+          <thead>
+            <tr className={"text-xs border-b"}>
+              <th className={"p-2"}>序号</th>
+              <th className={"p-2"}>批号</th>
+              <th className={"p-2"}>目标地址</th>
+              <th className={"p-2"}>金额</th>
+              <th className={"p-2"}>状态</th>
+              <th className={"p-2"}>发起人</th>
+              <th className={"p-2"}>操作</th>
+            </tr>
+          </thead>
+          <tbody className={"text-xs"}>
+            {DATA &&
+              DATA.map(
+                (
+                  item: {
+                    id: number;
+                    walletAddress: string;
+                    chainId: number;
+                    amount: number;
+                    orderType: string;
+                    batchNo: string;
+                    info: string;
+                    status: number;
+                    promoter: string;
+                    promoteAt: string;
+                    auditor: string;
+                    auditAt: string;
+                  },
+                  index: number,
+                ) => (
+                  <tr key={index} className={"border-b"}>
+                    <td className={"p-2 text-center"}>{item.id}</td>
+                    <td className={"p-2 text-center"}>{item.batchNo}</td>
+                    <td
+                      className={"p-2 text-center"}
+                    >{`${item.walletAddress.slice(
+                      0,
+                      6,
+                    )}...${item.walletAddress.slice(-4)}`}</td>
+                    <td className={"p-2 text-center"}>{item.amount} ATF</td>
+                    <td className={"p-2 text-center"}>
+                      {item.status === 0 && "待审核"}
+                      {item.status === 1 && "已通过"}
+                      {item.status === 2 && "已拒绝"}
+                    </td>
+                    <td className={"p-2 text-center"}>{`${item.promoter.slice(
+                      0,
+                      6,
+                    )}...${item.promoter.slice(-4)}`}</td>
+                    <td
+                      className={
+                        "flex flex-row items-center justify-center h-full p-2 space-x-2"
+                      }
+                    >
+                      {item.status === 0 && (
+                        <>
+                          <button
+                            className={"text-green-300 hover:text-green-500"}
+                            onClick={async () => {
+                              await agree(item.id, item.batchNo);
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            className={"text-red-300 hover:text-red-500"}
+                            onClick={async () => {
+                              await disagree(item.id, item.batchNo);
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                              />
+                            </svg>
+                          </button>
+                        </>
+                      )}
+                      {item.status === 1 && <div></div>}
+                      {item.status === 2 && <div></div>}
+                    </td>
+                  </tr>
+                ),
+              )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
