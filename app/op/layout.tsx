@@ -20,10 +20,12 @@ export default function Layout(props: { children: ReactNode }) {
       <div className={"max-w-[1920px] w-full h-full flex"}>
         <Navigation />
         <div
-          className={"w-full px-8 mr-10 space-y-2 overflow-x-hidden break-all"}
+          className={
+            "w-full px-8 mr-10 space-y-2 overflow-x-hidden break-all flex flex-col"
+          }
         >
           <Toolbar />
-          {props.children}
+          <div className={"flex-1"}>{props.children}</div>
         </div>
       </div>
       <Dock />

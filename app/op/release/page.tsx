@@ -94,7 +94,7 @@ const Article = () => {
   };
 
   return (
-    <div className={"flex flex-row space-x-4 h-[80vh]"}>
+    <div className={"flex flex-row space-x-4 h-full"}>
       <div className={"h-full w-full max-w-md flex flex-col gap-4 pt-4"}>
         <div className={"w-full flex flex-col gap-2"}>
           <div
@@ -251,7 +251,7 @@ const Article = () => {
           </button>
         </div>
       </div>
-      <div className={"w-full space-y-6 h-[80vh] overflow-scroll pr-4"}>
+      <div className={"w-full space-y-6 h-full overflow-scroll pr-4"}>
         {data &&
           data.map((item: any, index: number) => (
             <div key={index} className={"border p-3 space-y-3"}>
