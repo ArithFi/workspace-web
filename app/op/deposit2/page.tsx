@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isAddress } from "@ethersproject/address";
 import useSWR from "swr";
 
@@ -15,6 +15,7 @@ const Send = () => {
   });
   const [token, setToken] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [todoStatus, setTodoStatus] = useState(0);
 
   const addressArray = useMemo(
     () =>
@@ -31,7 +32,7 @@ const Send = () => {
 
   const { data, mutate } = useSWR(
     token
-      ? `https://db.nestfi.net/arithfi_main/maintains/listAirdrop?walletAddress=${form.promoter}`
+      ? `https://db.nestfi.net/arithfi_main/maintains/listAirdrop?walletAddress=${form.promoter}&status=${todoStatus}`
       : undefined,
     (url) =>
       fetch(url, {
@@ -47,6 +48,10 @@ const Send = () => {
       refreshInterval: 10_000,
     },
   );
+
+  useEffect(() => {
+    mutate();
+  }, [todoStatus]);
 
   const send = async () => {
     setStatus("loading");
@@ -250,7 +255,39 @@ const Send = () => {
           </button>
         </div>
       </div>
-      <div className={"w-full space-y-6 overflow-scroll pr-4 border"}>
+      <div className={"w-full space-y-6 overflow-scroll border"}>
+        <div className={"flex flex-row items-center text-xs font-bold"}>
+          <button
+            className={`px-4 py-2 rounded ${
+              todoStatus === 0 ? "bg-[#EAB308] text-white" : ""
+            }`}
+            onClick={() => {
+              setTodoStatus(0);
+            }}
+          >
+            待审批
+          </button>
+          <button
+            className={`px-4 py-2 rounded ${
+              todoStatus === 1 ? "bg-green-500 text-white" : ""
+            }`}
+            onClick={() => {
+              setTodoStatus(1);
+            }}
+          >
+            已通过
+          </button>
+          <button
+            className={`px-4 py-2 rounded ${
+              todoStatus === 2 ? "bg-red-500 text-white" : ""
+            }`}
+            onClick={() => {
+              setTodoStatus(2);
+            }}
+          >
+            已拒绝
+          </button>
+        </div>
         <table className="table-auto w-full">
           <thead>
             <tr className={"text-xs border-b"}>
@@ -265,100 +302,102 @@ const Send = () => {
           </thead>
           <tbody className={"text-xs"}>
             {data &&
-              data.map(
-                (
-                  item: {
-                    id: number;
-                    walletAddress: string;
-                    chainId: number;
-                    amount: number;
-                    orderType: string;
-                    batchNo: string;
-                    info: string;
-                    status: number;
-                    promoter: string;
-                    promoteAt: string;
-                    auditor: string;
-                    auditAt: string;
-                  },
-                  index: number,
-                ) => (
-                  <tr key={index} className={"border-b"}>
-                    <td className={"p-2 text-center"}>{item.id}</td>
-                    <td className={"p-2 text-center"}>{item.batchNo}</td>
-                    <td
-                      className={"p-2 text-center"}
-                    >{`${item.walletAddress.slice(
-                      0,
-                      6,
-                    )}...${item.walletAddress.slice(-4)}`}</td>
-                    <td className={"p-2 text-center"}>{item.amount} ATF</td>
-                    <td className={"p-2 text-center"}>
-                      {item.status === 0 && "待审核"}
-                      {item.status === 1 && "已通过"}
-                      {item.status === 2 && "已拒绝"}
-                    </td>
-                    <td className={"p-2 text-center"}>{`${item.promoter.slice(
-                      0,
-                      6,
-                    )}...${item.promoter.slice(-4)}`}</td>
-                    <td
-                      className={
-                        "flex flex-row items-center justify-center h-full p-2 space-x-2"
-                      }
-                    >
-                      {item.status === 0 && (
-                        <>
-                          <button
-                            className={"text-green-300 hover:text-green-500"}
-                            onClick={async () => {
-                              await agree(item.id, item.batchNo);
-                            }}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="w-6 h-6"
+              data
+                .map(
+                  (
+                    item: {
+                      id: number;
+                      walletAddress: string;
+                      chainId: number;
+                      amount: number;
+                      orderType: string;
+                      batchNo: string;
+                      info: string;
+                      status: number;
+                      promoter: string;
+                      promoteAt: string;
+                      auditor: string;
+                      auditAt: string;
+                    },
+                    index: number,
+                  ) => (
+                    <tr key={index} className={"border-b"}>
+                      <td className={"p-2 text-center"}>{item.id}</td>
+                      <td className={"p-2 text-center"}>{item.batchNo}</td>
+                      <td
+                        className={"p-2 text-center"}
+                      >{`${item.walletAddress.slice(
+                        0,
+                        6,
+                      )}...${item.walletAddress.slice(-4)}`}</td>
+                      <td className={"p-2 text-center"}>{item.amount} ATF</td>
+                      <td className={"p-2 text-center"}>
+                        {item.status === 0 && "待审核"}
+                        {item.status === 1 && "已通过"}
+                        {item.status === 2 && "已拒绝"}
+                      </td>
+                      <td className={"p-2 text-center"}>{`${item.promoter.slice(
+                        0,
+                        6,
+                      )}...${item.promoter.slice(-4)}`}</td>
+                      <td
+                        className={
+                          "flex flex-row items-center justify-center h-full p-2 space-x-2"
+                        }
+                      >
+                        {item.status === 0 && (
+                          <>
+                            <button
+                              className={"text-green-300 hover:text-green-500"}
+                              onClick={async () => {
+                                await agree(item.id, item.batchNo);
+                              }}
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                              />
-                            </svg>
-                          </button>
-                          <button
-                            className={"text-red-300 hover:text-red-500"}
-                            onClick={async () => {
-                              await disagree(item.id, item.batchNo);
-                            }}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="w-6 h-6"
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                />
+                              </svg>
+                            </button>
+                            <button
+                              className={"text-red-300 hover:text-red-500"}
+                              onClick={async () => {
+                                await disagree(item.id, item.batchNo);
+                              }}
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                              />
-                            </svg>
-                          </button>
-                        </>
-                      )}
-                      {item.status === 1 && <div></div>}
-                      {item.status === 2 && <div></div>}
-                    </td>
-                  </tr>
-                ),
-              )}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                />
+                              </svg>
+                            </button>
+                          </>
+                        )}
+                        {item.status === 1 && <div></div>}
+                        {item.status === 2 && <div></div>}
+                      </td>
+                    </tr>
+                  ),
+                )
+                .reverse()}
           </tbody>
         </table>
       </div>
