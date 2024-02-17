@@ -79,6 +79,7 @@ const CSR = () => {
         <label className={"text-sm font-bold"}>签名</label>
         <input
           value={token}
+          type={"password"}
           placeholder={"Token"}
           className={"border p-2 text-sm"}
           onChange={(e) => setToken(e.target.value)}

@@ -130,6 +130,7 @@ const Send = () => {
         <label className={"text-sm font-medium"}>签名</label>
         <input
           value={token}
+          type={"password"}
           placeholder={"Token"}
           className={"border p-2"}
           onChange={(e) => setToken(e.target.value)}
