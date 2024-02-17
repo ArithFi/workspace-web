@@ -28,7 +28,6 @@ export default function Layout(props: { children: ReactNode }) {
           <div className={"flex-1"}>{props.children}</div>
         </div>
       </div>
-      <Dock />
     </div>
   );
 }

@@ -26,7 +26,6 @@ export default function Layout(props: { children: ReactNode }) {
           {props.children}
         </div>
       </div>
-      <Dock />
     </div>
   );
 }
