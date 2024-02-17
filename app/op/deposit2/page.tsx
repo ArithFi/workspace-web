@@ -160,20 +160,20 @@ const Send = () => {
 
   return (
     <div className={"flex flex-row space-x-4 h-[80vh]"}>
-      <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
+      <div className={"h-full w-full max-w-md flex flex-col gap-4 pt-4"}>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>充值地址:</label>
+          <label className={"text-xs font-bold"}>充值地址:</label>
           <textarea
             value={addresses}
             placeholder={"充值地址"}
             onChange={(e) => {
               setAddresses(e.target.value);
             }}
-            className={"border w-full p-2"}
+            className={"border w-full p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>充值数量</label>
+          <label className={"text-xs font-bold"}>充值数量</label>
           <input
             value={form.amount}
             placeholder={"充值数量"}
@@ -183,11 +183,11 @@ const Send = () => {
                 amount: e.target.value,
               });
             }}
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>备注</label>
+          <label className={"text-xs font-bold"}>备注</label>
           <input
             value={form.info}
             placeholder={"备注"}
@@ -197,15 +197,15 @@ const Send = () => {
                 info: e.target.value,
               })
             }
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>发起人</label>
+          <label className={"text-xs font-bold"}>发起人</label>
           <input
             value={form.promoter}
             placeholder={"发起人"}
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
             onChange={(e) =>
               setForm({
                 ...form,
@@ -215,29 +215,29 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>签名</label>
+          <label className={"text-xs font-bold"}>签名</label>
           <input
             value={token}
             placeholder={"Token"}
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
             onChange={(e) => setToken(e.target.value)}
           />
         </div>
         <div className={"w-full flex flex-col gap-2 mt-16"}>
-          <label className={"text-sm font-medium"}>确认本次充值</label>
+          <label className={"text-xs font-bold"}>确认本次充值</label>
           <input
             value={confirm}
             placeholder={"请重复输入充值金额"}
             className={`border p-2 ${
               confirm !== form.amount && "border-red-500"
-            } rounded`}
+            } rounded text-sm`}
             onChange={(e) => setConfirm(e.target.value)}
           />
         </div>
         <div className={"flex justify-end"}>
           <button
             className={
-              "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4"
+              "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4 text-sm"
             }
             onClick={send}
             disabled={!isOk || !addressArray?.length || confirm !== form.amount}

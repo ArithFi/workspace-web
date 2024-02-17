@@ -60,17 +60,17 @@ const CSR = () => {
   };
 
   return (
-    <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
+    <div className={"h-full w-full max-w-md flex flex-col gap-4 pt-4"}>
       <div className={"text-xl font-medium"}>用户关系管理</div>
       <input
         placeholder={"KL 地址"}
-        className={"border p-2"}
+        className={"border p-2 text-sm"}
         value={klAddress}
         onChange={(e) => setKlAddress(e.target.value)}
       />
       <textarea
         placeholder={"用户地址"}
-        className={"border p-2 min-h-[300px]"}
+        className={"border p-2 min-h-[300px] text-sm"}
         value={userAddresses}
         onChange={(e) => setUserAddresses(e.target.value)}
       />
@@ -87,7 +87,7 @@ const CSR = () => {
       <div className={"flex gap-2 mt-20"}>
         <input
           placeholder={"确认 KL 地址"}
-          className={"border p-2 w-full"}
+          className={"border p-2 w-full text-sm"}
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
         />
@@ -100,7 +100,7 @@ const CSR = () => {
             status.status === "loading"
           }
           className={
-            "bg-yellow-500 text-white p-2 disabled:opacity-50 disabled:cursor-auto shrink-0"
+            "bg-yellow-500 text-white p-2 disabled:opacity-50 disabled:cursor-auto shrink-0 text-sm"
           }
         >
           {status.status === "loading" ? "Loading" : "增加关系"}

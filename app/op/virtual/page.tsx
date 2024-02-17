@@ -56,49 +56,49 @@ const CSR = () => {
   };
 
   return (
-    <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
+    <div className={"h-full w-full max-w-md flex flex-col gap-4 pt-4"}>
       <div className={"w-full flex flex-col gap-2"}>
-        <label className={"text-sm font-medium"}>交易地址（无法提现）</label>
+        <label className={"text-sm font-bold"}>交易地址（无法提现）</label>
         <input
           value={form.targetAddress}
           placeholder={"TargetAddress"}
-          className={"border p-2"}
+          className={"border p-2 text-sm"}
           onChange={(e) => setForm({ ...form, targetAddress: e.target.value })}
         />
       </div>
       <div className={"w-full flex flex-col gap-2"}>
-        <label className={"text-sm font-medium"}>提现地址</label>
+        <label className={"text-sm font-bold"}>提现地址</label>
         <input
           value={form.bindAddress}
           placeholder={"BindAddress"}
-          className={"border p-2"}
+          className={"border p-2 text-sm"}
           onChange={(e) => setForm({ ...form, bindAddress: e.target.value })}
         />
       </div>
       <div className={"w-full flex flex-col gap-2"}>
-        <label className={"text-sm font-medium"}>签名</label>
+        <label className={"text-sm font-bold"}>签名</label>
         <input
           value={token}
           placeholder={"Token"}
-          className={"border p-2"}
+          className={"border p-2 text-sm"}
           onChange={(e) => setToken(e.target.value)}
         />
       </div>
       <div className={"w-full flex flex-col gap-2 mt-16"}>
-        <label className={"text-sm font-medium"}>确认本次设置</label>
+        <label className={"text-sm font-bold"}>确认本次设置</label>
         <input
           value={confirm}
           placeholder={"请重复交易地址（无法提现）"}
           className={`border p-2 ${
             confirm !== form.targetAddress && "border-red-500"
-          } rounded`}
+          } rounded text-sm`}
           onChange={(e) => setConfirm(e.target.value)}
         />
       </div>
       <div className={"flex justify-end"}>
         <button
           className={
-            "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4"
+            "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4 text-sm"
           }
           onClick={send}
           disabled={

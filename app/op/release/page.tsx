@@ -95,14 +95,14 @@ const Article = () => {
 
   return (
     <div className={"flex flex-row space-x-4 h-[80vh]"}>
-      <div className={"h-full w-full max-w-xl flex flex-col gap-4 pt-4"}>
+      <div className={"h-full w-full max-w-md flex flex-col gap-4 pt-4"}>
         <div className={"w-full flex flex-col gap-2"}>
           <div
             className={
               "w-full flex flex-row gap-2 justify-between items-center bg-gray-50 p-3 rounded-lg"
             }
           >
-            <label className={"text-sm font-medium"}>语言</label>
+            <label className={"text-sm font-bold"}>语言</label>
             <select
               className={"border p-1 w-20"}
               onChange={(e) => {
@@ -126,7 +126,7 @@ const Article = () => {
               "w-full flex flex-row gap-2 justify-between items-center bg-gray-50 p-3 rounded-lg"
             }
           >
-            <label className={"text-sm font-medium"}>OS</label>
+            <label className={"text-sm font-bold"}>OS</label>
             <select
               className={"border p-1 w-20"}
               onChange={(e) => {
@@ -146,7 +146,7 @@ const Article = () => {
             "w-full flex flex-row gap-2 justify-between items-center bg-gray-50 p-3 rounded-lg"
           }
         >
-          <label className={"text-sm font-medium"}>部署阶段</label>
+          <label className={"text-sm font-bold"}>部署阶段</label>
           <select
             className={"border p-1 w-20"}
             onChange={(e) => {
@@ -161,7 +161,7 @@ const Article = () => {
           </select>
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>版本</label>
+          <label className={"text-sm font-bold"}>版本</label>
           <input
             value={form.version}
             placeholder={"版本"}
@@ -171,11 +171,11 @@ const Article = () => {
                 version: e.target.value,
               })
             }
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>标题</label>
+          <label className={"text-sm font-bold"}>标题</label>
           <input
             value={form.title}
             placeholder={"标题"}
@@ -185,11 +185,11 @@ const Article = () => {
                 title: e.target.value,
               })
             }
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>内容</label>
+          <label className={"text-sm font-bold"}>内容</label>
           <textarea
             value={form.content}
             placeholder={"内容"}
@@ -199,11 +199,11 @@ const Article = () => {
                 content: e.target.value,
               })
             }
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>URL</label>
+          <label className={"text-sm font-bold"}>URL</label>
           <input
             value={form.url}
             placeholder={"url"}
@@ -213,26 +213,26 @@ const Article = () => {
                 url: e.target.value,
               })
             }
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>签名</label>
+          <label className={"text-sm font-bold"}>签名</label>
           <input
             value={token}
             placeholder={"Token"}
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
             onChange={(e) => setToken(e.target.value)}
           />
         </div>
         <div className={"w-full flex flex-col gap-2 mt-16"}>
-          <label className={"text-sm font-medium"}>确认本次充值</label>
+          <label className={"text-sm font-bold"}>确认本次充值</label>
           <input
             value={confirm}
             placeholder={"请重复输入URL"}
             className={`border p-2 ${
               confirm !== form.url && "border-red-500"
-            } rounded`}
+            } rounded text-sm`}
             onChange={(e) => setConfirm(e.target.value)}
           />
         </div>

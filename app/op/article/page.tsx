@@ -92,9 +92,9 @@ const Article = () => {
 
   return (
     <div className={"flex flex-row space-x-4 h-[80vh]"}>
-      <div className={"w-full max-w-xl flex flex-col gap-4 pt-4 pr-4 border-r"}>
+      <div className={"w-full max-w-md flex flex-col gap-4 pt-4 pr-4 border-r"}>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>标题</label>
+          <label className={"text-sm font-bold"}>标题</label>
           <input
             value={form.title}
             placeholder={"标题"}
@@ -104,11 +104,11 @@ const Article = () => {
                 title: e.target.value,
               });
             }}
-            className={"border w-full p-2"}
+            className={"border w-full p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>简介</label>
+          <label className={"text-sm font-bold"}>简介</label>
           <textarea
             value={form.brief}
             placeholder={"简介"}
@@ -118,11 +118,11 @@ const Article = () => {
                 brief: e.target.value,
               });
             }}
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>URL</label>
+          <label className={"text-sm font-bold"}>URL</label>
           <input
             value={form.url}
             placeholder={"URL"}
@@ -132,7 +132,7 @@ const Article = () => {
                 url: e.target.value,
               })
             }
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
           />
         </div>
         <div
@@ -140,7 +140,7 @@ const Article = () => {
             "w-full flex flex-row gap-2 justify-between items-center bg-gray-50 p-3 rounded-lg"
           }
         >
-          <label className={"text-sm font-medium"}>语言</label>
+          <label className={"text-sm font-bold"}>语言</label>
           <select
             className={"border p-1 w-20"}
             onChange={(e) => {
@@ -160,29 +160,29 @@ const Article = () => {
           </select>
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-sm font-medium"}>签名</label>
+          <label className={"text-sm font-bold"}>签名</label>
           <input
             value={token}
             placeholder={"Token"}
-            className={"border p-2"}
+            className={"border p-2 text-sm"}
             onChange={(e) => setToken(e.target.value)}
           />
         </div>
         <div className={"w-full flex flex-col gap-2 mt-16"}>
-          <label className={"text-sm font-medium"}>确认本次充值</label>
+          <label className={"text-sm font-bold"}>确认本次充值</label>
           <input
             value={confirm}
             placeholder={"请重复输入URL"}
             className={`border p-2 ${
               confirm !== form.url && "border-red-500"
-            } rounded`}
+            } rounded text-sm`}
             onChange={(e) => setConfirm(e.target.value)}
           />
         </div>
         <div className={"flex justify-end"}>
           <button
             className={
-              "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4"
+              "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4 text-sm"
             }
             onClick={send}
             disabled={confirm !== form.url}
