@@ -108,23 +108,6 @@ const Send = () => {
     }
   };
 
-  const DATA = [
-    {
-      id: 0,
-      walletAddress: "walletAddress",
-      chainId: 56,
-      amount: 1000,
-      orderType: "orderType",
-      batchNo: "batchNo",
-      info: "info",
-      status: 0,
-      promoter: "promoter",
-      promoteAt: "2024-02-17T06:52:56.530Z",
-      auditor: "auditor",
-      auditAt: "2024-02-17T06:52:56.530Z",
-    },
-  ];
-
   const agree = async (id: number, batchNo: string) => {
     const mode = window.localStorage.getItem("mode") || "prod";
     let url;
@@ -280,8 +263,8 @@ const Send = () => {
             </tr>
           </thead>
           <tbody className={"text-xs"}>
-            {DATA &&
-              DATA.map(
+            {data &&
+              data.map(
                 (
                   item: {
                     id: number;
