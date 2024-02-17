@@ -30,7 +30,9 @@ const Send = () => {
   );
 
   const { data } = useSWR(
-    token ? "https://db.nestfi.net/arithfi_main/maintains/list" : undefined,
+    token
+      ? `https://db.nestfi.net/arithfi_main/maintains/listAirdrop?walletAddress=${form.promoter}`
+      : undefined,
     (url) =>
       fetch(url, {
         headers: {
@@ -78,7 +80,7 @@ const Send = () => {
         ),
       })
         .then((res) => res.json())
-        .then((res) => res.value);
+        .then((res) => res.data);
       if (res) {
         setStatus("success");
         setConfirm("");
