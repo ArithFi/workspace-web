@@ -7,15 +7,7 @@ const Send = () => {
   const [form, setForm] = useState({
     walletAddress: "",
     nickName: "",
-    avatar: "",
-    tags: "",
-    introduction: "",
-    maxFollowers: "",
-    maxPositionSize: "",
-    rewardRatio: "",
-    lossRatio: "",
     inviteRewardRatio: "",
-    groupId: "",
     status: 1,
     chainId: 56,
   });
@@ -29,10 +21,10 @@ const Send = () => {
     let url, chainId;
     if (mode === "test") {
       chainId = 97;
-      url = "https://db.arithfi.com/arithfi/maintains/saveKolCopy";
+      url = "https://db.arithfi.com/arithfi/maintains/saveKolInvite";
     } else {
       chainId = 56;
-      url = "https://db.arithfi.com/arithfi_main/maintains/saveKolCopy";
+      url = "https://db.arithfi.com/arithfi_main/maintains/saveKolInvite";
     }
 
     try {
@@ -45,10 +37,6 @@ const Send = () => {
         },
         body: JSON.stringify({
           ...form,
-          maxFollowers: Number(form.maxFollowers),
-          maxPositionSize: Number(form.maxPositionSize),
-          rewardRatio: Number(form.rewardRatio),
-          lossRatio: Number(form.lossRatio),
           inviteRewardRatio: Number(form.inviteRewardRatio),
           chainId: chainId,
         }),
@@ -57,14 +45,12 @@ const Send = () => {
         .then((res) => res.data);
       if (res) {
         setStatus("success");
-        // await mutate();
         setConfirm("");
         setTimeout(() => {
           setStatus("idle");
         }, 3000);
       } else {
         setStatus("error");
-        // await mutate();
         setConfirm("");
         setTimeout(() => {
           setStatus("idle");
@@ -72,7 +58,6 @@ const Send = () => {
       }
     } catch (e) {
       setStatus("error");
-      // await mutate();
       setConfirm("");
       setTimeout(() => {
         setStatus("idle");
@@ -116,104 +101,6 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>头像</label>
-          <input
-            value={form.avatar}
-            placeholder={"avatar"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                avatar: e.target.value,
-              })
-            }
-            className={"border p-2 text-sm"}
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>标签</label>
-          <input
-            value={form.tags}
-            placeholder={"tags"}
-            className={"border p-2 text-sm"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                tags: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>介绍</label>
-          <input
-            value={form.introduction}
-            placeholder={"introduction"}
-            className={"border p-2 text-sm"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                introduction: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>最大跟单人数</label>
-          <input
-            value={form.maxFollowers}
-            placeholder={"maxFollowers"}
-            className={"border p-2 text-sm"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                maxFollowers: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>最大持仓</label>
-          <input
-            value={form.maxPositionSize}
-            placeholder={"maxPositionSize"}
-            className={"border p-2 text-sm"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                maxPositionSize: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>返佣比例</label>
-          <input
-            value={form.rewardRatio}
-            placeholder={"rewardRatio"}
-            className={"border p-2 text-sm"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                rewardRatio: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>亏损补偿比例</label>
-          <input
-            value={form.lossRatio}
-            placeholder={"lossRatio"}
-            className={"border p-2 text-sm"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                lossRatio: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>邀请奖励比例</label>
           <input
             value={form.inviteRewardRatio}
@@ -223,20 +110,6 @@ const Send = () => {
               setForm({
                 ...form,
                 inviteRewardRatio: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>组ID</label>
-          <input
-            value={form.groupId}
-            placeholder={"groupId"}
-            className={"border p-2 text-sm"}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                groupId: e.target.value,
               })
             }
           />
