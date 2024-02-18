@@ -65,6 +65,10 @@ const menu = [
         name: "账户充值审批",
       },
       {
+        path: "/op/settlement",
+        name: "清算管理",
+      },
+      {
         path: "/op/relationship",
         name: "用户关系管理",
       },
@@ -75,6 +79,10 @@ const menu = [
       {
         path: "/op/copyKol",
         name: "Copy KOL管理",
+      },
+      {
+        path: "/op/inviteKol",
+        name: "Invite KOL管理",
       },
       {
         path: "/op/article",
