@@ -44,7 +44,7 @@ const Article = () => {
         }),
       })
         .then((res) => res.json())
-        .then((res) => res.value);
+        .then((res) => res.data);
       if (res) {
         setStatus("success");
         setConfirm("");
