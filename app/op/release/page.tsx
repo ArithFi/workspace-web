@@ -25,9 +25,9 @@ const Article = () => {
     const mode = window.localStorage.getItem("mode") || "prod";
     let url;
     if (mode === "test") {
-      url = "https://db.arithfi.com/arithfi_main/maintains/saveReleaseLog";
-    } else {
       url = "https://db.arithfi.com/arithfi/maintains/saveReleaseLog";
+    } else {
+      url = "https://db.arithfi.com/arithfi_main/maintains/saveReleaseLog";
     }
 
     try {
