@@ -73,6 +73,10 @@ const menu = [
         name: "虚拟账号管理",
       },
       {
+        path: "/op/copyKol",
+        name: "Copy KOL管理",
+      },
+      {
         path: "/op/article",
         name: "文章管理",
       },
