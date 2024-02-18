@@ -25,7 +25,7 @@ const Article = () => {
     const mode = window.localStorage.getItem("mode") || "prod";
     let url;
     if (mode === "test") {
-      url = "https://db.nestfi.net/arithfi_main/maintains/saveReleaseLog";
+      url = "https://db.arithfi.com/arithfi_main/maintains/saveReleaseLog";
     } else {
       url = "https://db.arithfi.com/arithfi/maintains/saveReleaseLog";
     }
@@ -69,7 +69,7 @@ const Article = () => {
 
   const { data, mutate } = useSWR(
     form.lang && form.os && form.target
-      ? `https://db.nestfi.net/arithfi_main/user/listReleaseLog?os=${form.os}&lang=${form.lang}&target=${form.target}`
+      ? `https://db.arithfi.com/arithfi_main/user/listReleaseLog?os=${form.os}&lang=${form.lang}&target=${form.target}`
       : undefined,
     (url) =>
       fetch(url)
@@ -79,7 +79,7 @@ const Article = () => {
 
   const deleteReleaseLog = async (id: number) => {
     const data = await fetch(
-      `https://db.nestfi.net/arithfi_main/maintains/deleteReleaseLog?id=${id}`,
+      `https://db.arithfi.com/arithfi_main/maintains/deleteReleaseLog?id=${id}`,
       {
         method: "POST",
         headers: {

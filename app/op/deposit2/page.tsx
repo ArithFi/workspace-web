@@ -32,7 +32,7 @@ const Send = () => {
 
   const { data, mutate } = useSWR(
     token
-      ? `https://db.nestfi.net/arithfi_main/maintains/listAirdrop?walletAddress=${form.promoter}&status=${todoStatus}`
+      ? `https://db.arithfi.com/arithfi_main/maintains/listAirdrop?walletAddress=${form.promoter}&status=${todoStatus}`
       : undefined,
     (url) =>
       fetch(url, {
@@ -65,7 +65,7 @@ const Send = () => {
     if (mode === "test") {
       url = "https://db.nestfi.net/arithfi/maintains/airdrop";
     } else {
-      url = "https://db.nestfi.net/arithfi_main/maintains/airdrop";
+      url = "https://db.arithfi.com/arithfi_main/maintains/airdrop";
     }
 
     try {
@@ -119,7 +119,7 @@ const Send = () => {
     if (mode === "test") {
       url = "https://db.nestfi.net/arithfi/maintains/confirmAirdrop";
     } else {
-      url = "https://db.nestfi.net/arithfi_main/maintains/confirmAirdrop";
+      url = "https://db.arithfi.com/arithfi_main/maintains/confirmAirdrop";
     }
 
     const res = await fetch(url, {
@@ -144,7 +144,7 @@ const Send = () => {
     if (mode === "test") {
       url = "https://db.nestfi.net/arithfi/maintains/rejectAirdrop";
     } else {
-      url = "https://db.nestfi.net/arithfi_main/maintains/rejectAirdrop";
+      url = "https://db.arithfi.com/arithfi_main/maintains/rejectAirdrop";
     }
 
     const res = await fetch(url, {

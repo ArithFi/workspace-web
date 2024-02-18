@@ -40,7 +40,7 @@ const Send = () => {
     let chainId, url;
     if (mode === "test") {
       chainId = 97;
-      url = "https://db.nestfi.net/arithfi_main/op/user/airdrop";
+      url = "https://db.arithfi.com/arithfi_main/op/user/airdrop";
     } else {
       chainId = 56;
       url = "https://db.arithfi.com/arithfi/op/user/airdrop";

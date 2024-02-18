@@ -22,7 +22,7 @@ const Article = () => {
     const mode = window.localStorage.getItem("mode") || "prod";
     let url;
     if (mode === "test") {
-      url = "https://db.nestfi.net/arithfi_main/maintains/saveArticle";
+      url = "https://db.arithfi.com/arithfi_main/maintains/saveArticle";
     } else {
       url = "https://db.arithfi.com/arithfi/maintains/saveArticle";
     }
@@ -66,7 +66,7 @@ const Article = () => {
 
   const { data, mutate } = useSWR(
     form.lang
-      ? `https://db.nestfi.net/arithfi_main/user/listArticle?lang=${form.lang}&start=0&count=20`
+      ? `https://db.arithfi.com/arithfi_main/user/listArticle?lang=${form.lang}&start=0&count=20`
       : undefined,
     (url) =>
       fetch(url)
@@ -76,7 +76,7 @@ const Article = () => {
 
   const deleteArticle = async (id: number) => {
     const data = await fetch(
-      `https://db.nestfi.net/arithfi_main/maintains/deleteArticle?id=${id}`,
+      `https://db.arithfi.com/arithfi_main/maintains/deleteArticle?id=${id}`,
       {
         method: "POST",
         headers: {
