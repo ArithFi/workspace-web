@@ -23,23 +23,6 @@ const Send = () => {
   const [token, setToken] = useState("");
   const [confirm, setConfirm] = useState("");
 
-  const { data, mutate } = useSWR(
-    token ? `https://db.arithfi.com/arithfi_main/user/listKol` : undefined,
-    (url) =>
-      fetch(url, {
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-          token: `${Math.ceil(new Date().getTime() / 1000)}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => res.data),
-    {
-      refreshInterval: 10_000,
-    },
-  );
-
   const send = async () => {
     setStatus("loading");
 
@@ -47,10 +30,10 @@ const Send = () => {
     let url, chainId;
     if (mode === "test") {
       chainId = 97;
-      url = "https://db.nestfi.net/arithfi/maintains/airdrop";
+      url = "https://db.nestfi.net/arithfi/maintains/saveKolCopy";
     } else {
       chainId = 56;
-      url = "https://db.arithfi.com/arithfi_main/maintains/airdrop";
+      url = "https://db.arithfi.com/arithfi_main/maintains/saveKolCopy";
     }
 
     try {
@@ -100,9 +83,13 @@ const Send = () => {
 
   return (
     <div className={"flex flex-row space-x-4 h-full pb-8"}>
-      <div className={"h-full w-full max-w-md flex flex-col gap-4 pt-4"}>
+      <div
+        className={
+          "h-full w-full max-w-md flex flex-col gap-4 pt-4 pr-4 border-r"
+        }
+      >
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>Copy KOL地址</label>
+          <label className={"text-xs font-bold"}>KOL地址</label>
           <input
             value={form.walletAddress}
             placeholder={"Copy KOL充值地址"}
@@ -116,7 +103,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>nickName</label>
+          <label className={"text-xs font-bold"}>昵称</label>
           <input
             value={form.nickName}
             placeholder={"nickName"}
@@ -130,7 +117,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>avatar</label>
+          <label className={"text-xs font-bold"}>头像</label>
           <input
             value={form.avatar}
             placeholder={"avatar"}
@@ -144,7 +131,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>tags</label>
+          <label className={"text-xs font-bold"}>标签</label>
           <input
             value={form.tags}
             placeholder={"tags"}
@@ -158,7 +145,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>introduction</label>
+          <label className={"text-xs font-bold"}>介绍</label>
           <input
             value={form.introduction}
             placeholder={"introduction"}
@@ -172,7 +159,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>maxFollowers</label>
+          <label className={"text-xs font-bold"}>最大跟单人数</label>
           <input
             value={form.maxFollowers}
             placeholder={"maxFollowers"}
@@ -186,7 +173,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>maxPositionSize</label>
+          <label className={"text-xs font-bold"}>最大持仓</label>
           <input
             value={form.maxPositionSize}
             placeholder={"maxPositionSize"}
@@ -200,7 +187,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>rewardRatio</label>
+          <label className={"text-xs font-bold"}>返佣比例</label>
           <input
             value={form.rewardRatio}
             placeholder={"rewardRatio"}
@@ -214,7 +201,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>lossRatio</label>
+          <label className={"text-xs font-bold"}>亏损补偿比例</label>
           <input
             value={form.lossRatio}
             placeholder={"lossRatio"}
@@ -228,7 +215,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>inviteRewardRatio</label>
+          <label className={"text-xs font-bold"}>邀请奖励比例</label>
           <input
             value={form.inviteRewardRatio}
             placeholder={"inviteRewardRatio"}
@@ -242,7 +229,7 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>groupId</label>
+          <label className={"text-xs font-bold"}>组ID</label>
           <input
             value={form.groupId}
             placeholder={"groupId"}
@@ -255,19 +242,24 @@ const Send = () => {
             }
           />
         </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>groupId</label>
-          <input
-            value={form.groupId}
-            placeholder={"groupId"}
-            className={"border p-2 text-sm"}
+        <div
+          className={
+            "w-full flex gap-2 flex-row justify-between bg-gray-100 p-4 rounded"
+          }
+        >
+          <label className={"text-xs font-bold"}>状态</label>
+          <select
+            className={"text-xs bg-transparent font-bold"}
             onChange={(e) =>
               setForm({
                 ...form,
-                groupId: e.target.value,
+                status: Number(e.target.value),
               })
             }
-          />
+          >
+            <option value={"1"}>开启</option>
+            <option value={"0"}>关闭</option>
+          </select>
         </div>
         <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>签名</label>
@@ -283,7 +275,7 @@ const Send = () => {
           <label className={"text-xs font-bold"}>确认本次新增</label>
           <input
             value={confirm}
-            placeholder={"请重复输入walletAddress"}
+            placeholder={"请重复输入钱包地址"}
             className={`border p-2 ${
               confirm !== form.walletAddress && "border-red-500"
             } rounded text-sm`}
@@ -304,68 +296,6 @@ const Send = () => {
             {status === "loading" && "创建中..."}
           </button>
         </div>
-      </div>
-      <div className={"w-full space-y-6 overflow-scroll border"}>
-        <table className="table-auto w-full">
-          <thead>
-            <tr className={"text-xs border-b"}>
-              <th className={"p-2"}>chainId</th>
-              <th className={"p-2"}>walletAddress</th>
-              <th className={"p-2"}>nickName</th>
-              <th className={"p-2"}>maxFollowers</th>
-              <th className={"p-2"}>maxPositionSize</th>
-              <th className={"p-2"}>rewardRatio</th>
-              <th className={"p-2"}>lossRatio</th>
-              <th className={"p-2"}>inviteRewardRatio</th>
-              <th className={"p-2"}>groupId</th>
-              <th className={"p-2"}>status</th>
-            </tr>
-          </thead>
-          <tbody className={"text-xs"}>
-            {data &&
-              data
-                .map(
-                  (
-                    item: {
-                      chainId: number;
-                      walletAddress: string;
-                      nickName: string;
-                      maxFollowers: number;
-                      maxPositionSize: number;
-                      rewardRatio: number;
-                      lossRatio: number;
-                      inviteRewardRatio: number;
-                      groupId: string;
-                      status: number;
-                    },
-                    index: number,
-                  ) => (
-                    <tr key={index} className={"border-b"}>
-                      <td className={"p-2 text-center"}>{item.chainId}</td>
-                      <td
-                        className={"p-2 text-center"}
-                      >{`${item.walletAddress.slice(
-                        0,
-                        6,
-                      )}...${item.walletAddress.slice(-4)}`}</td>
-                      <td className={"p-2 text-center"}>{item.nickName}</td>
-                      <td className={"p-2 text-center"}>{item.maxFollowers}</td>
-                      <td className={"p-2 text-center"}>
-                        {item.maxPositionSize}
-                      </td>
-                      <td className={"p-2 text-center"}>{item.rewardRatio}</td>
-                      <td className={"p-2 text-center"}>{item.lossRatio}</td>
-                      <td className={"p-2 text-center"}>
-                        {item.inviteRewardRatio}
-                      </td>
-                      <td className={"p-2 text-center"}>{item.groupId}</td>
-                      <td className={"p-2 text-center"}>{item.status}</td>
-                    </tr>
-                  ),
-                )
-                .reverse()}
-          </tbody>
-        </table>
       </div>
     </div>
   );
