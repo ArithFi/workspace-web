@@ -225,7 +225,7 @@ const Article = () => {
                 </Link>
                 <button
                   className={"text-xs text-red-500 font-bold"}
-                  onChange={async () => {
+                  onClick={async () => {
                     await deleteArticle(item.id);
                   }}
                 >
