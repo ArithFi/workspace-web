@@ -8,7 +8,7 @@ const Article = () => {
   const [status, setStatus] = useState("idle");
   const [form, setForm] = useState({
     ts: "",
-    os: "",
+    os: "ios",
     target: "release",
     lang: "en",
     version: "",
