@@ -69,7 +69,7 @@ const Article = () => {
 
   const { data, mutate } = useSWR(
     form.lang && form.os && form.target
-      ? `https://db.arithfi.com/arithfi_main/user/listReleaseLog?os=${form.os}&lang=${form.lang}&target=${form.target}`
+      ? `https://db.arithfi.com/arithfi_main/user/latestReleaseLog?os=${form.os}&lang=${form.lang}&target=${form.target}`
       : undefined,
     (url) =>
       fetch(url, {
