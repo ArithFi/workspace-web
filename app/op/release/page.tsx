@@ -260,46 +260,43 @@ const Article = () => {
         </div>
       </div>
       <div className={"w-full space-y-6 h-full overflow-scroll pr-4"}>
-        {data &&
-          data.map((item: any, index: number) => (
-            <div key={index} className={"border p-3 space-y-3"}>
-              <div
-                className={
-                  "flex flex-row space-x-2 justify-between items-center"
-                }
-              >
-                <div className={"flex flex-row space-x-2 items-center"}>
-                  <div className={"font-bold text-xs"}>{item.title}</div>
-                  <div className={"font-bold text-xs"}>{item.os}</div>
-                  <div className={"font-bold text-xs"}>{item.target}</div>
-                  <div className={"text-blue-500 text-xs font-bold"}>
-                    {item.lang}
-                  </div>
+        {data && (
+          <div className={"border p-3 space-y-3"}>
+            <div
+              className={"flex flex-row space-x-2 justify-between items-center"}
+            >
+              <div className={"flex flex-row space-x-2 items-center"}>
+                <div className={"font-bold text-xs"}>{data.title}</div>
+                <div className={"font-bold text-xs"}>{data.os}</div>
+                <div className={"font-bold text-xs"}>{data.target}</div>
+                <div className={"text-blue-500 text-xs font-bold"}>
+                  {data.lang}
                 </div>
-                <div className={"text-gray-800 text-xs"}>{item.ts}</div>
               </div>
-              <div className={"text-gray-500 text-xs line-clamp-2"}>
-                {item.content}
-              </div>
-              <div className={"flex flex-row justify-between"}>
-                <Link
-                  href={item.url}
-                  target={"_blank"}
-                  className={"text-xs text-gray-800"}
-                >
-                  {item.url}
-                </Link>
-                <button
-                  className={"text-xs text-red-500 font-bold"}
-                  onChange={async () => {
-                    await deleteReleaseLog(item.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+              <div className={"text-gray-800 text-xs"}>{data.ts}</div>
             </div>
-          ))}
+            <div className={"text-gray-500 text-xs line-clamp-2"}>
+              {data.content}
+            </div>
+            <div className={"flex flex-row justify-between"}>
+              <Link
+                href={data.url}
+                target={"_blank"}
+                className={"text-xs text-gray-800"}
+              >
+                {data.url}
+              </Link>
+              <button
+                className={"text-xs text-red-500 font-bold"}
+                onChange={async () => {
+                  await deleteReleaseLog(data.id);
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
