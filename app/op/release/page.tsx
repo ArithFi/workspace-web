@@ -82,6 +82,9 @@ const Article = () => {
       })
         .then((res) => res.json())
         .then((res) => res.data),
+    {
+      refreshInterval: 5_000,
+    },
   );
 
   const deleteReleaseLog = async (id: number) => {
