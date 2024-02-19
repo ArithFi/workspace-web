@@ -72,7 +72,14 @@ const Article = () => {
       ? `https://db.arithfi.com/arithfi_main/user/listReleaseLog?os=${form.os}&lang=${form.lang}&target=${form.target}`
       : undefined,
     (url) =>
-      fetch(url)
+      fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+          token: `${Math.ceil(new Date().getTime() / 1000)}`,
+        },
+      })
         .then((res) => res.json())
         .then((res) => res.data),
   );
