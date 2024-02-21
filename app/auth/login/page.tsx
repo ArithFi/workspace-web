@@ -54,7 +54,6 @@ export default function Page() {
           />
           <input
             className={"border focus:outline-none px-3 py-2"}
-            type={"password"}
             placeholder={"password"}
             value={password}
             onChange={(e) => {

@@ -138,7 +138,6 @@ const Send = () => {
           <input
             value={token}
             placeholder={"Token"}
-            type={"password"}
             className={"border p-2 text-sm"}
             onChange={(e) => setToken(e.target.value)}
           />
