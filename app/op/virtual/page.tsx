@@ -11,17 +11,11 @@ const CSR = () => {
   });
   const [token, setToken] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
 
   const send = async () => {
     setStatus("loading");
-    const mode = window.localStorage.getItem("mode") || "prod";
-    let chainId;
-    if (mode === "test") {
-      chainId = 97;
-    } else {
-      chainId = 56;
-    }
-    const url = `https://db.arithfi.com/arithfi/op/user/setVirtualAccount?targetAddress=${form.targetAddress}&bindAddress=${form.bindAddress}&chainId=${chainId}`;
+    const url = `https://db.arithfi.com/arithfi_main/user/setVirtualAccount?walletAddress=${walletAddress}&targetAddress=${form.targetAddress}&bindAddress=${form.bindAddress}`;
 
     try {
       const res = await fetch(url, {
@@ -76,11 +70,19 @@ const CSR = () => {
         />
       </div>
       <div className={"w-full flex flex-col gap-2"}>
-        <label className={"text-sm font-bold"}>签名</label>
+        <label className={"text-sm font-bold"}>操作人地址</label>
+        <input
+          value={walletAddress}
+          placeholder={"操作人地址"}
+          className={"border p-2 text-sm"}
+          onChange={(e) => setWalletAddress(e.target.value)}
+        />
+      </div>
+      <div className={"w-full flex flex-col gap-2"}>
+        <label className={"text-sm font-bold"}>操作人签名</label>
         <input
           value={token}
-          type={"password"}
-          placeholder={"Token"}
+          placeholder={"操作人签名"}
           className={"border p-2 text-sm"}
           onChange={(e) => setToken(e.target.value)}
         />
@@ -105,7 +107,9 @@ const CSR = () => {
           disabled={
             confirm !== form.targetAddress ||
             !isAddress(form.targetAddress) ||
-            !isAddress(form.bindAddress)
+            !isAddress(form.bindAddress) ||
+            walletAddress === "" ||
+            token === ""
           }
         >
           {status === "idle" && "设置"}
