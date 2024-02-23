@@ -57,10 +57,6 @@ const menu = [
         name: "消息推送",
       },
       {
-        path: "/op/deposit",
-        name: "账户充值",
-      },
-      {
         path: "/op/deposit2",
         name: "账户充值审批",
       },
