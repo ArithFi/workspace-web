@@ -294,7 +294,7 @@ const Send = () => {
               <th className={"p-2"}>批号</th>
               <th className={"p-2"}>目标地址</th>
               <th className={"p-2"}>金额</th>
-              <th className={"p-2"}>状态</th>
+              <th className={"p-2"}>备注</th>
               <th className={"p-2"}>发起人</th>
               <th className={"p-2"}>操作</th>
             </tr>
@@ -330,11 +330,7 @@ const Send = () => {
                         6,
                       )}...${item.walletAddress.slice(-4)}`}</td>
                       <td className={"p-2 text-center"}>{item.amount} ATF</td>
-                      <td className={"p-2 text-center"}>
-                        {item.status === 0 && "待审核"}
-                        {item.status === 1 && "已通过"}
-                        {item.status === 2 && "已拒绝"}
-                      </td>
+                      <td className={"p-2 text-center"}>{item.info}</td>
                       <td className={"p-2 text-center"}>{`${item.promoter.slice(
                         0,
                         6,
