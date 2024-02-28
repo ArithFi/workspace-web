@@ -31,6 +31,10 @@ const menu = [
         name: "期货交易",
       },
       {
+        path: "/futures/appDownload",
+        name: "应用下载数据",
+      },
+      {
         path: "/futures/kol",
         name: "KOL 交叉表",
       },
