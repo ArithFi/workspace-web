@@ -8,7 +8,7 @@ const PairCard: FC<{
 }> = ({ pair }) => {
   const { data } = useSWR(
     pair
-      ? `https://db.arithfi.com/arithfi/op/future/getRt?product=${pair}`
+      ? `https://db.arithfi.com/arithfi_main/future/getRt?product=${pair}`
       : undefined,
     (url) =>
       fetch(url)
