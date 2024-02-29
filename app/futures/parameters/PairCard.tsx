@@ -37,17 +37,49 @@ const PairCard: FC<{
           {new Date(data?.ts).toLocaleString()}
         </div>
       </div>
-      <Item title={"交易对常数, r0"} value={data?.r0} />
-      <Item title={"交易对常数, c"} value={data?.c} />
-      <Item title={"看涨仓位, ml"} value={data?.ml} />
-      <Item title={"看跌仓位, ms"} value={data?.ms} />
-      <Item title={"看涨持仓费率积分系数, rl"} value={data?.rl} />
-      <Item title={"看跌持仓费率积分系数, rs"} value={data?.rs} />
-      <Item title={"距离上次更新的秒数, dt"} value={data?.dt} />
-      <Item title={"上次更新的rtl, prevRtl"} value={data?.prevRtl.toFixed(9)} />
-      <Item title={"上次更新的rts, prevRts"} value={data?.prevRts.toFixed(9)} />
-      <Item title={"看涨动态持仓费的积分, rtl"} value={data?.rtl.toFixed(9)} />
-      <Item title={"看跌动态持仓费的积分, rts"} value={data?.rts.toFixed(9)} />
+      <Item
+        title={
+          <p>
+            r<sub>0</sub> 基础补偿费率
+          </p>
+        }
+        value={data?.r0}
+      />
+      <Item title={<p>c 最大费率</p>} value={data?.c} />
+      <Item
+        title={
+          <p>
+            V<sup>L</sup> 多头总仓位价值
+          </p>
+        }
+        value={data?.ml}
+      />
+      <Item
+        title={
+          <p>
+            V<sup>S</sup> 空头总仓位价值
+          </p>
+        }
+        value={data?.ms}
+      />
+      <Item
+        title={
+          <p>
+            R<sub>t</sub>
+            <sup>L</sup> 看涨动态补偿费率
+          </p>
+        }
+        value={data?.rtl.toFixed(9)}
+      />
+      <Item
+        title={
+          <p>
+            R<sub>t</sub>
+            <sup>S</sup> 看跌动态补偿费率
+          </p>
+        }
+        value={data?.rts.toFixed(9)}
+      />
     </div>
   );
 };
@@ -55,7 +87,7 @@ const PairCard: FC<{
 export default PairCard;
 
 const Item: FC<{
-  title: string;
+  title: React.ReactNode;
   value: string | number;
 }> = ({ title, value }) => {
   const previousColor = usePrevious(value);
@@ -73,7 +105,7 @@ const Item: FC<{
   return (
     <div className={"flex justify-between hover:underline"}>
       <div className={"text-xs text-gray-800"}>{title}</div>
-      <div className={`text-xs ${style}`}>{value}</div>
+      <div className={`text-xs ${style}`}>{Number(value).toFixed(4)}</div>
     </div>
   );
 };
