@@ -13,7 +13,7 @@ const PairCard: FC<{
     (url) =>
       fetch(url)
         .then((res) => res.json())
-        .then((data) => data?.value),
+        .then((data) => data?.data),
     {
       refreshInterval: 3_000,
     },
