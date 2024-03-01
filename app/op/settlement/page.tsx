@@ -12,7 +12,7 @@ const Send = () => {
 
   const { data, mutate } = useSWR(
     token
-      ? `https://db.arithfi.com/arithfi_main/maintains/listSettlement?walletAddress=${form.promoter}&status=${todoStatus}`
+      ? `https://db.arithfi.com/arithfi_main/maintains/listSettlement?&status=${todoStatus}&count=100`
       : undefined,
     (url) =>
       fetch(url, {
