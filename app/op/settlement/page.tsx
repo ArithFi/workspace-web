@@ -42,10 +42,8 @@ const Send = () => {
       url = "https://db.arithfi.com/arithfi_main/maintains/confirmSettlement";
     }
 
-    const formdata = new FormData();
-    formdata.append("walletAddress", form.promoter);
-    formdata.append("ids", JSON.stringify([id]));
-
+    // 在 url 上拼接walletAddress=a，ids=[a]
+    url += `?walletAddress=${form.promoter}&ids=[${id}]`;
     await fetch(url, {
       method: "POST",
       headers: {
@@ -53,7 +51,6 @@ const Send = () => {
         "Content-Type": "application/x-www-form-urlencoded",
         token: `${Math.ceil(new Date().getTime() / 1000)}`,
       },
-      body: formdata,
     });
     await mutate();
   };
