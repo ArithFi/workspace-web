@@ -43,7 +43,7 @@ const Send = () => {
     }
 
     // 在 url 上拼接walletAddress=a，ids=[a]
-    url += `?walletAddress=${form.promoter}&ids=[${id}]`;
+    url += `?walletAddress=${form.promoter}&ids=${id}`;
     await fetch(url, {
       method: "POST",
       headers: {
