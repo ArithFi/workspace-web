@@ -48,7 +48,6 @@ const Send = () => {
       method: "POST",
       headers: {
         Authorization: `${token}`,
-        "Content-Type": "application/x-www-form-urlencoded",
         token: `${Math.ceil(new Date().getTime() / 1000)}`,
       },
     });
