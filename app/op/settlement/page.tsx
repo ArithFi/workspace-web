@@ -123,6 +123,7 @@ const Send = () => {
               <th className={"p-2"}>金额</th>
               <th className={"p-2"}>种类</th>
               <th className={"p-2"}>状态</th>
+              <th className={"p-2"}>hash</th>
               <th className={"p-2"}>操作</th>
             </tr>
           </thead>
@@ -163,6 +164,7 @@ const Send = () => {
                         {item.status === 1 && "已通过"}
                         {item.status === 2 && "已拒绝"}
                       </td>
+                      <td className={"p-2 text-center"}>{item.hash}</td>
                       <td className={"p-2 text-center"}>{item.type}</td>
                       <td
                         className={
