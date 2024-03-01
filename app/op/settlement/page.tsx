@@ -42,17 +42,18 @@ const Send = () => {
       url = "https://db.arithfi.com/arithfi_main/maintains/confirmSettlement";
     }
 
-    const res = await fetch(url, {
+    const formdata = new FormData();
+    formdata.append("walletAddress", form.promoter);
+    formdata.append("ids", JSON.stringify([id]));
+
+    await fetch(url, {
       method: "POST",
       headers: {
         Authorization: `${token}`,
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
         token: `${Math.ceil(new Date().getTime() / 1000)}`,
       },
-      body: JSON.stringify({
-        ids: [id],
-        walletAddress: form.promoter,
-      }),
+      body: formdata,
     });
     await mutate();
   };
