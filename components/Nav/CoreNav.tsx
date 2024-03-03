@@ -73,6 +73,10 @@ const menu = [
         name: "用户关系管理",
       },
       {
+        path: "/op/tags",
+        name: "用户标签管理",
+      },
+      {
         path: "/op/virtual",
         name: "虚拟账号管理",
       },
