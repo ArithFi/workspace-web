@@ -1,15 +1,16 @@
 "use client";
 import useSWR from "swr";
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { usePrevious } from "@uidotdev/usehooks";
 
 const PairCard: FC<{
   pair: string;
 }> = ({ pair }) => {
-  const { data } = useSWR(
-    pair
-      ? `https://db.arithfi.com/arithfi_main/future/getRt?product=${pair}`
-      : undefined,
+  const [url, setUrl] = useState("https://db.arithfi.com/arithfi_main");
+  const mode = window.localStorage.getItem("mode") || "prod";
+
+  const { data, mutate } = useSWR(
+    pair ? `${url}/future/getRt?product=${pair}` : undefined,
     (url) =>
       fetch(url)
         .then((res) => res.json())
@@ -18,6 +19,15 @@ const PairCard: FC<{
       refreshInterval: 3_000,
     },
   );
+
+  useEffect(() => {
+    if (mode === "test") {
+      setUrl("https://db.nestfi.net/arithfi");
+    } else {
+      setUrl("https://db.arithfi.com/arithfi_main");
+    }
+    mutate();
+  }, [mode]);
 
   return (
     <div
