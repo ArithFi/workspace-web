@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isAddress } from "@ethersproject/address";
 import useSWR from "swr";
 
@@ -168,8 +168,13 @@ const Send = () => {
 export default Send;
 
 const AddressTag = ({ address, token }: { address: string; token: string }) => {
-  const { data: tags } = useSWR(
-    `https://db.nestfi.net/arithfi/maintains/listUserTags?walletAddress=${address}`,
+  const mode = window.localStorage.getItem("mode") || "prod";
+  const [url, setUrl] = useState(
+    "https://db.arithfi.com/arithfi_main/maintains/listUserTags",
+  );
+
+  const { data: tags, mutate } = useSWR(
+    `${url}?walletAddress=${address}`,
     (url) =>
       fetch(url, {
         method: "GET",
@@ -180,6 +185,15 @@ const AddressTag = ({ address, token }: { address: string; token: string }) => {
         .then((res) => res.json())
         .then((res) => res.data),
   );
+
+  useEffect(() => {
+    if (mode === "test") {
+      setUrl("https://db.nestfi.net/arithfi/maintains/listUserTags");
+    } else {
+      setUrl("https://db.arithfi.com/arithfi_main/maintains/listUserTags");
+    }
+    mutate();
+  }, [mode]);
 
   return (
     <div className={"text-sm"}>
