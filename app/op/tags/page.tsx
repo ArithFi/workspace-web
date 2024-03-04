@@ -198,7 +198,7 @@ const AddressTag = ({ address, token }: { address: string; token: string }) => {
   return (
     <div className={"text-sm"}>
       <div>{address}</div>
-      {tags.map((item: any, index: number) => (
+      {tags?.map((item: any, index: number) => (
         <div key={index} className={"flex justify-between"}>
           <div>{item.tag}</div>
           <div>{item.status ? "生效" : "不生效"}</div>
