@@ -115,7 +115,7 @@ const Item: FC<{
   return (
     <div className={"flex justify-between hover:underline"}>
       <div className={"text-xs text-gray-800"}>{title}</div>
-      <div className={`text-xs ${style}`}>{Number(value).toFixed(4)}</div>
+      <div className={`text-xs ${style}`}>{Number(value).toFixed(8)}</div>
     </div>
   );
 };
