@@ -169,7 +169,7 @@ export default Send;
 
 const AddressTag = ({ address, token }: { address: string; token: string }) => {
   const { data: tags } = useSWR(
-    `https://db.arithfi.com/arithfi_main/maintains/listUserTags?walletAddress=${address}`,
+    `https://db.nestfi.net/arithfi/maintains/listUserTags?walletAddress=${address}`,
     (url) =>
       fetch(url, {
         method: "GET",
