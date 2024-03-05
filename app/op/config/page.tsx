@@ -6,7 +6,6 @@ import useSWR from "swr";
 
 const Page = () => {
   const [status, setStatus] = useState("idle");
-  const [addresses, setAddresses] = useState("");
   const [form, setForm] = useState({
     key: "",
     value: "",
@@ -16,19 +15,6 @@ const Page = () => {
   const [url, setURL] = useState("https://db.arithfi.com/arithfi_main");
 
   const mode = window.localStorage.getItem("mode") || "prod";
-
-  const addressArray = useMemo(
-    () =>
-      addresses
-        ?.replaceAll(" ", "\n")
-        ?.split("\n")
-        .filter((item) => item !== ""),
-    [addresses],
-  );
-  const isOk = useMemo(
-    () => addressArray.every((item) => isAddress(item)),
-    [addressArray],
-  );
 
   const { data, mutate } = useSWR(
     token ? `${url}/user/listConfig` : undefined,
@@ -57,11 +43,6 @@ const Page = () => {
 
   const send = async () => {
     setStatus("loading");
-    if (!isOk) {
-      setStatus("error");
-      return;
-    }
-
     try {
       const res = await fetch(
         `${url}/maintains/saveConfig?key=${form.key}&value=${form.value}`,
@@ -158,7 +139,7 @@ const Page = () => {
               "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4 text-sm"
             }
             onClick={send}
-            disabled={!isOk || !addressArray?.length || confirm !== form.key}
+            disabled={confirm !== form.key}
           >
             {status === "idle" && "充值"}
             {status === "success" && "充值成功"}
