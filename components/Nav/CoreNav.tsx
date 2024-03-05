@@ -96,6 +96,10 @@ const menu = [
         path: "/op/release",
         name: "App版本发布说明",
       },
+      {
+        path: "/op/config",
+        name: "App 配置管理",
+      },
     ],
   },
   {
