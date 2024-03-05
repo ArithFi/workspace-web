@@ -49,9 +49,9 @@ const Page = () => {
 
   useEffect(() => {
     if (mode === "test") {
-      setURL("https://db.nestfi.net/arithfi/maintains");
+      setURL("https://db.nestfi.net/arithfi");
     } else {
-      setURL("https://db.arithfi.com/arithfi_main/maintains");
+      setURL("https://db.arithfi.com/arithfi_main");
     }
   }, [mode]);
 
@@ -64,7 +64,7 @@ const Page = () => {
 
     try {
       const res = await fetch(
-        `${url}/saveConfig?key=${form.key}&value=${form.value}`,
+        `${url}/maintains/saveConfig?key=${form.key}&value=${form.value}`,
         {
           method: "POST",
           headers: {
