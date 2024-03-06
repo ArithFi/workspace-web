@@ -104,7 +104,7 @@ const Page = () => {
         </div>
         <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>值</label>
-          <input
+          <textarea
             value={form.value}
             placeholder={"Value"}
             onChange={(e) =>
