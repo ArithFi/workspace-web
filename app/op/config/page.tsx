@@ -159,6 +159,20 @@ const Page = () => {
             <div className={"text-xs font-bold border p-1"}>home_banner_en</div>
           </div>
         </div>
+        <div className={"flex flex-col gap-2"}>
+          <div className={"font-bold text-xs"}>常用 Value</div>
+          <div className={"flex gap-2"}>
+            <div className={"text-xs font-bold border p-1"}>
+              {JSON.stringify([
+                {
+                  name: "banner1",
+                  image: "https://xxx",
+                  link: "https://xxx",
+                },
+              ])}
+            </div>
+          </div>
+        </div>
       </div>
       <ReactJson src={data} />
     </div>
