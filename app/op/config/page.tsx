@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { isAddress } from "@ethersproject/address";
 import useSWR from "swr";
+import ReactJson from "react-json-view";
 
 const Page = () => {
   const [status, setStatus] = useState("idle");
@@ -85,7 +86,7 @@ const Page = () => {
   };
 
   return (
-    <div className={"flex flex-row space-x-4 h-full pb-8"}>
+    <div className={"flex flex-row space-x-8 h-full pb-8"}>
       <div className={"h-full w-full max-w-md flex flex-col gap-4 pt-4"}>
         <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>key</label>
@@ -150,9 +151,7 @@ const Page = () => {
           </button>
         </div>
       </div>
-      <div className={"w-full space-y-6 overflow-scroll border"}>
-        {JSON.stringify(data)}
-      </div>
+      <ReactJson src={data} />
     </div>
   );
 };
