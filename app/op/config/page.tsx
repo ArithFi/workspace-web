@@ -89,10 +89,10 @@ const Page = () => {
     <div className={"flex flex-row space-x-8 h-full pb-8"}>
       <div className={"h-full w-full max-w-md flex flex-col gap-4 pt-4"}>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>key</label>
+          <label className={"text-xs font-bold"}>键</label>
           <input
             value={form.key}
-            placeholder={"key"}
+            placeholder={"Key"}
             onChange={(e) => {
               setForm({
                 ...form,
@@ -103,10 +103,10 @@ const Page = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>value</label>
+          <label className={"text-xs font-bold"}>值</label>
           <input
             value={form.value}
-            placeholder={"value"}
+            placeholder={"Value"}
             onChange={(e) =>
               setForm({
                 ...form,
@@ -129,7 +129,7 @@ const Page = () => {
           <label className={"text-xs font-bold"}>确认本次配置</label>
           <input
             value={confirm}
-            placeholder={"请重复输入key"}
+            placeholder={"请重复输入Key"}
             className={`border p-2 ${
               confirm !== form.key && "border-red-500"
             } rounded text-sm`}
