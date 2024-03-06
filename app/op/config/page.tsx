@@ -150,6 +150,15 @@ const Page = () => {
             {status === "loading" && "充值中..."}
           </button>
         </div>
+        <div className={"flex flex-col gap-2"}>
+          <div className={"font-bold text-xs"}>常用 Key</div>
+          <div className={"flex gap-2"}>
+            <div className={"text-xs font-bold border p-1"}>
+              home_support_url
+            </div>
+            <div className={"text-xs font-bold border p-1"}>home_banner_en</div>
+          </div>
+        </div>
       </div>
       <ReactJson src={data} />
     </div>
