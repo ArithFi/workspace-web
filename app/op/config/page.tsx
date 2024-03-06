@@ -45,7 +45,9 @@ const Page = () => {
     setStatus("loading");
     try {
       const res = await fetch(
-        `${url}/maintains/saveConfig?key=${form.key}&value=${form.value}`,
+        `${url}/maintains/saveConfig?key=${form.key}&value=${encodeURIComponent(
+          form.value,
+        )}`,
         {
           method: "POST",
           headers: {
