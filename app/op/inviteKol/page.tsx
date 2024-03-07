@@ -90,8 +90,8 @@ const Send = () => {
         <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>Invite Code</label>
           <input
-            value={form.walletAddress}
-            placeholder={"Invite"}
+            value={form.inviteCode}
+            placeholder={"Invite Code"}
             onChange={(e) => {
               setForm({
                 ...form,
