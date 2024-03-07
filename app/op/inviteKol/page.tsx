@@ -6,6 +6,7 @@ const Send = () => {
   const [status, setStatus] = useState("idle");
   const [form, setForm] = useState({
     walletAddress: "",
+    inviteCode: "",
     nickName: "",
     inviteRewardRatio: "",
     status: 1,
@@ -81,6 +82,20 @@ const Send = () => {
               setForm({
                 ...form,
                 walletAddress: e.target.value,
+              });
+            }}
+            className={"border p-2 text-sm"}
+          />
+        </div>
+        <div className={"w-full flex flex-col gap-2"}>
+          <label className={"text-xs font-bold"}>Invite Code</label>
+          <input
+            value={form.walletAddress}
+            placeholder={"Invite"}
+            onChange={(e) => {
+              setForm({
+                ...form,
+                inviteCode: e.target.value,
               });
             }}
             className={"border p-2 text-sm"}
