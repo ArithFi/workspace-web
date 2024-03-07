@@ -22,7 +22,7 @@ const Send = () => {
     let url, chainId;
     if (mode === "test") {
       chainId = 97;
-      url = "https://db.arithfi.com/arithfi/maintains/saveKolInvite";
+      url = "https://db.nestfi.net/arithfi/maintains/saveKolInvite";
     } else {
       chainId = 56;
       url = "https://db.arithfi.com/arithfi_main/maintains/saveKolInvite";
