@@ -25,9 +25,7 @@ const Price = () => {
   const [btcPrice, setBtcPrice] = useState(null);
 
   useEffect(() => {
-    const ws = new WebSocket(
-      "wss://fstream.binance.com/ws/dogeusdt@markPrice@1s",
-    );
+    const ws = new WebSocket("wss://fstream.binance.com/ws/dogeusdt@aggTrade");
 
     ws.onmessage = (event) => {
       const json = JSON.parse(event.data);
