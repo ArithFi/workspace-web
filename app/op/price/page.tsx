@@ -38,7 +38,7 @@ const Price = () => {
     };
 
     return () => ws.close();
-  }, []);
+  }, [symbol]);
 
   return (
     <div className={"flex flex-col space-y-2"}>
