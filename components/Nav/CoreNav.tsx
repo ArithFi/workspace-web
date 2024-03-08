@@ -100,6 +100,10 @@ const menu = [
         path: "/op/config",
         name: "App 配置管理",
       },
+      {
+        path: "/op/price",
+        name: "价格源对比",
+      },
     ],
   },
   {
