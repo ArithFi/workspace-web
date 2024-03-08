@@ -4,9 +4,10 @@ import useSWR from "swr";
 import { useEffect, useState } from "react";
 
 const Price = () => {
+  const [symbol, setSymbol] = useState("DOGE");
   // https://api.binance.com/fapi/v1/ticker/price?symbol=BTCUSDT
-  const { data: binanceFAPI } = useSWR(
-    `https://fapi.binance.com/fapi/v1/ticker/price?symbol=DOGEUSDT`,
+  const { data: binanceFAPI, mutate: mutateBinance } = useSWR(
+    `https://fapi.binance.com/fapi/v1/ticker/price?symbol=${symbol}USDT`,
     (url: string) => fetch(url).then((res) => res.json()),
     {
       refreshInterval: 200,
@@ -14,31 +15,51 @@ const Price = () => {
   );
 
   // https://db.arithfi.com/arithfi_main/oracle/price?product=BTC/USDT
-  const { data: atfAPI } = useSWR(
-    `https://db.arithfi.com/arithfi_main/oracle/price?product=DOGE/USDT`,
+  const { data: atfAPI, mutate: mutateATF } = useSWR(
+    `https://db.arithfi.com/arithfi_main/oracle/price?product=${symbol}/USDT`,
     (url: string) => fetch(url).then((res) => res.json()),
     {
       refreshInterval: 200,
     },
   );
 
-  const [btcPrice, setBtcPrice] = useState(null);
+  const [wsPrice, setWsPrice] = useState(0);
 
   useEffect(() => {
-    const ws = new WebSocket("wss://fstream.binance.com/ws/dogeusdt@aggTrade");
+    const ws = new WebSocket(
+      `wss://fstream.binance.com/ws/${symbol.toLowerCase()}usdt@aggTrade`,
+    );
 
     ws.onmessage = (event) => {
       const json = JSON.parse(event.data);
       if (json.p) {
-        setBtcPrice(json.p);
+        setWsPrice(json.p);
       }
     };
 
-    return () => ws.close(); // 组件卸载时关闭连接
+    return () => ws.close();
   }, []);
 
   return (
     <div className={"flex flex-col space-y-2"}>
+      <div className={"flex flex-row space-x-2"}>
+        {["BTC", "DOGE", "SOL"].map((item, index) => (
+          <button
+            key={index}
+            className={`px-3 border-2 rounded-full border-gray-500 text-sm ${
+              symbol === item ? "bg-gray-500 text-white" : ""
+            }`}
+            onClick={() => {
+              setSymbol(item);
+              mutateBinance();
+              mutateATF();
+            }}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
       <div className={"flex space-x-2"}>
         <div
           className={
@@ -58,9 +79,7 @@ const Price = () => {
           <div className={"text-xs text-gray-600"}>
             REST API: https://db.arithfi.com/arithfi_main/oracle/price
           </div>
-          <div className={"text-4xl text-gray-800"}>
-            {atfAPI?.data.toFixed(6)}
-          </div>
+          <div className={"text-4xl text-gray-800"}>{atfAPI?.data}</div>
         </div>
         <div
           className={
@@ -70,9 +89,7 @@ const Price = () => {
           <div className={"text-xs text-gray-600"}>
             WS API: wss://fstream.binance.com/ws/
           </div>
-          <div className={"text-4xl text-gray-800"}>
-            {Number(btcPrice).toFixed(6)}
-          </div>
+          <div className={"text-4xl text-gray-800"}>{Number(wsPrice)}</div>
         </div>
       </div>
     </div>
