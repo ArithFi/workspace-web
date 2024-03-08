@@ -67,7 +67,8 @@ const Price = () => {
           }
         >
           <div className={"text-xs text-gray-600"}>
-            WS API: wss://fstream.binance.com/ws/
+            WS API: wss://fstream.binance.com/ws/{symbol.toLowerCase()}
+            usdt@ticker
           </div>
           <div className={"text-4xl text-gray-800"}>{Number(wsPrice)}</div>
         </div>
@@ -77,7 +78,8 @@ const Price = () => {
           }
         >
           <div className={"text-xs text-gray-600"}>
-            REST API: https://fapi.binance.com/fapi/v2/ticker/price
+            REST API: https://fapi.binance.com/fapi/v2/ticker/price?symbol=
+            {symbol}USDT
           </div>
           <div className={"text-4xl text-gray-800"}>{binanceFAPI?.price}</div>
         </div>
@@ -87,7 +89,8 @@ const Price = () => {
           }
         >
           <div className={"text-xs text-gray-600"}>
-            REST API: https://db.arithfi.com/arithfi_main/oracle/price
+            REST API: https://db.arithfi.com/arithfi_main/oracle/price?product=
+            {symbol}/USDT
           </div>
           <div className={"text-4xl text-gray-800"}>{atfAPI?.data}</div>
         </div>
