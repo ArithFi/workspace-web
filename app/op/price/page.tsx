@@ -54,7 +54,7 @@ const Price = () => {
         </div>
         <div
           className={
-            "flex flex-col w-fit p-4 border-2 space-y-2 rounded border-red-300"
+            "flex flex-col w-fit p-4 border-2 space-y-2 rounded border-yellow-500"
           }
         >
           <div className={"text-xs text-gray-600"}>
@@ -66,7 +66,7 @@ const Price = () => {
         </div>
         <div
           className={
-            "flex flex-col w-fit p-4 border-2 space-y-2 rounded border-red-300"
+            "flex flex-col w-fit p-4 border-2 space-y-2 rounded border-blue-500"
           }
         >
           <div className={"text-xs text-gray-600"}>
