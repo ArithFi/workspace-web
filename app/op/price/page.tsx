@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const Price = () => {
   // https://api.binance.com/fapi/v1/ticker/price?symbol=BTCUSDT
   const { data: binanceFAPI } = useSWR(
-    `https://fapi.binance.com/fapi/v1/ticker/price?symbol=BTCUSDT`,
+    `https://fapi.binance.com/fapi/v1/ticker/price?symbol=DOGEUSDT`,
     (url: string) => fetch(url).then((res) => res.json()),
     {
       refreshInterval: 200,
@@ -15,7 +15,7 @@ const Price = () => {
 
   // https://db.arithfi.com/arithfi_main/oracle/price?product=BTC/USDT
   const { data: atfAPI } = useSWR(
-    `https://db.arithfi.com/arithfi_main/oracle/price?product=BTC/USDT`,
+    `https://db.arithfi.com/arithfi_main/oracle/price?product=DOGE/USDT`,
     (url: string) => fetch(url).then((res) => res.json()),
     {
       refreshInterval: 200,
@@ -26,7 +26,7 @@ const Price = () => {
 
   useEffect(() => {
     const ws = new WebSocket(
-      "wss://fstream.binance.com/ws/btcusdt@markPrice@1s",
+      "wss://fstream.binance.com/ws/dogeusdt@markPrice@1s",
     );
 
     ws.onmessage = (event) => {
@@ -61,7 +61,7 @@ const Price = () => {
             REST API: https://db.arithfi.com/arithfi_main/oracle/price
           </div>
           <div className={"text-4xl text-gray-800"}>
-            {atfAPI?.data.toFixed(2)}
+            {atfAPI?.data.toFixed(6)}
           </div>
         </div>
         <div
@@ -73,7 +73,7 @@ const Price = () => {
             WS API: wss://fstream.binance.com/ws/
           </div>
           <div className={"text-4xl text-gray-800"}>
-            {Number(btcPrice).toFixed(2)}
+            {Number(btcPrice).toFixed(6)}
           </div>
         </div>
       </div>
