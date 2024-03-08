@@ -79,7 +79,7 @@ const PairCard: FC<{
             <sup>L</sup> 看涨动态补偿费率
           </p>
         }
-        value={data?.rtl.toFixed(9)}
+        value={data?.rtl.toFixed(12)}
       />
       <Item
         title={
@@ -88,7 +88,23 @@ const PairCard: FC<{
             <sup>S</sup> 看跌动态补偿费率
           </p>
         }
-        value={data?.rts.toFixed(9)}
+        value={data?.rts.toFixed(12)}
+      />
+      <Item
+        title={"按日看涨资金费率"}
+        value={`${(
+          ((data?.rtl - data?.prevRtl) / data?.dt) *
+          86400000 *
+          100
+        ).toFixed(4)}%`}
+      />
+      <Item
+        title={"按日看跌资金费率"}
+        value={`${(
+          ((data?.rts - data?.prevRts) / data?.dt) *
+          86400000 *
+          100
+        ).toFixed(4)}%`}
       />
     </div>
   );
@@ -115,7 +131,7 @@ const Item: FC<{
   return (
     <div className={"flex justify-between hover:underline"}>
       <div className={"text-xs text-gray-800"}>{title}</div>
-      <div className={`text-xs ${style}`}>{Number(value).toFixed(8)}</div>
+      <div className={`text-xs ${style}`}>{value}</div>
     </div>
   );
 };
