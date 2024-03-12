@@ -184,6 +184,9 @@ const AddressTag = ({ address, token }: { address: string; token: string }) => {
       })
         .then((res) => res.json())
         .then((res) => res.data),
+    {
+      refreshInterval: 3_000,
+    },
   );
 
   useEffect(() => {
