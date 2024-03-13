@@ -438,7 +438,7 @@ const Send = () => {
             className={
               "text-xs p-3 border border-red-500 text-red-500 rounded m-3"
             }
-            onClick={batchAgree}
+            onClick={() => batchAgree()}
           >
             批量通过本页所有申请
           </button>
