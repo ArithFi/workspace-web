@@ -163,7 +163,22 @@ const Send = () => {
     await mutate();
   };
 
-  const batchAgree = async () => {
+  type ItemType = {
+    id: number;
+    walletAddress: string;
+    chainId: number;
+    amount: number;
+    orderType: string;
+    batchNo: string;
+    info: string;
+    status: number;
+    promoter: string;
+    promoteAt: string;
+    auditor: string;
+    auditAt: string;
+  };
+
+  const batchAgree = async (data: ItemType[]) => {
     const mode = window.localStorage.getItem("mode") || "prod";
     let url;
     if (mode === "test") {
@@ -172,14 +187,17 @@ const Send = () => {
       url = "https://db.arithfi.com/arithfi_main/maintains/confirmAirdrop";
     }
 
-    const groupedData = data.reduce((groups: any, item: any) => {
-      const { batchNo } = item;
-      if (!groups[batchNo]) {
-        groups[batchNo] = [];
-      }
-      groups[batchNo].push(item);
-      return groups;
-    });
+    const groupedData = data.reduce(
+      (groups: Record<string, ItemType[]>, item) => {
+        const { batchNo } = item;
+        if (!groups[batchNo]) {
+          groups[batchNo] = [];
+        }
+        groups[batchNo].push(item);
+        return groups;
+      },
+      {},
+    );
     console.log(groupedData);
     for (const batchNo in groupedData) {
       const ids = groupedData[batchNo].map((item: any) => item.id);
@@ -438,7 +456,7 @@ const Send = () => {
             className={
               "text-xs p-3 border border-red-500 text-red-500 rounded m-3"
             }
-            onClick={() => batchAgree()}
+            onClick={() => batchAgree(data)}
           >
             批量通过本页所有申请
           </button>
