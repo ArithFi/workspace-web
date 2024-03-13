@@ -122,7 +122,7 @@ const Send = () => {
       url = "https://db.arithfi.com/arithfi_main/maintains/confirmAirdrop";
     }
 
-    const res = await fetch(url, {
+    await fetch(url, {
       method: "POST",
       headers: {
         Authorization: `${token}`,
@@ -147,7 +147,7 @@ const Send = () => {
       url = "https://db.arithfi.com/arithfi_main/maintains/rejectAirdrop";
     }
 
-    const res = await fetch(url, {
+    await fetch(url, {
       method: "POST",
       headers: {
         Authorization: `${token}`,
@@ -160,6 +160,44 @@ const Send = () => {
         walletAddress: form.promoter,
       }),
     });
+    await mutate();
+  };
+
+  const batchAgree = async () => {
+    const mode = window.localStorage.getItem("mode") || "prod";
+    let url;
+    if (mode === "test") {
+      url = "https://db.nestfi.net/arithfi/maintains/confirmAirdrop";
+    } else {
+      url = "https://db.arithfi.com/arithfi_main/maintains/confirmAirdrop";
+    }
+
+    const groupedData = data.reduce((groups: any, item: any) => {
+      const { batchNo } = item;
+      if (!groups[batchNo]) {
+        groups[batchNo] = [];
+      }
+      groups[batchNo].push(item);
+      return groups;
+    });
+
+    for (const batchNo in groupedData) {
+      const ids = groupedData[batchNo].map((item: any) => item.id);
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+          token: `${Math.ceil(new Date().getTime() / 1000)}`,
+        },
+        body: JSON.stringify({
+          ids: ids,
+          batchNo: batchNo,
+          walletAddress: form.promoter,
+        }),
+      });
+    }
+
     await mutate();
   };
 
@@ -255,7 +293,7 @@ const Send = () => {
         </div>
       </div>
       <div className={"w-full space-y-6 overflow-scroll border"}>
-        <div className={"flex flex-row items-center text-xs font-bold"}>
+        <div className={"flex flex-row items-center text-xs font-bold m-3"}>
           <button
             className={`px-4 py-2 rounded ${
               todoStatus === 0 ? "bg-[#EAB308] text-white" : ""
@@ -291,7 +329,6 @@ const Send = () => {
           <thead>
             <tr className={"text-xs border-b"}>
               <th className={"p-2"}>序号</th>
-              <th className={"p-2"}>批号</th>
               <th className={"p-2"}>目标地址</th>
               <th className={"p-2"}>金额</th>
               <th className={"p-2"}>备注</th>
@@ -322,13 +359,9 @@ const Send = () => {
                   ) => (
                     <tr key={index} className={"border-b"}>
                       <td className={"p-2 text-center"}>{item.id}</td>
-                      <td className={"p-2 text-center"}>{item.batchNo}</td>
-                      <td
-                        className={"p-2 text-center"}
-                      >{`${item.walletAddress.slice(
-                        0,
-                        6,
-                      )}...${item.walletAddress.slice(-4)}`}</td>
+                      <td className={"p-2 text-center"}>
+                        {item.walletAddress}
+                      </td>
                       <td className={"p-2 text-center"}>{item.amount} ATF</td>
                       <td className={"p-2 text-center"}>{item.info}</td>
                       <td className={"p-2 text-center"}>{`${item.promoter.slice(
@@ -395,6 +428,16 @@ const Send = () => {
                 .reverse()}
           </tbody>
         </table>
+        <div>
+          <button
+            className={
+              "text-xs p-3 border border-red-500 text-red-500 rounded m-3"
+            }
+            onClick={batchAgree}
+          >
+            批量通过本页所有申请
+          </button>
+        </div>
       </div>
     </div>
   );
