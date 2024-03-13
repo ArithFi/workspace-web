@@ -180,9 +180,14 @@ const Send = () => {
       groups[batchNo].push(item);
       return groups;
     });
-
+    console.log(groupedData);
     for (const batchNo in groupedData) {
       const ids = groupedData[batchNo].map((item: any) => item.id);
+      console.log({
+        ids: ids,
+        batchNo: batchNo,
+        walletAddress: form.promoter,
+      });
       await fetch(url, {
         method: "POST",
         headers: {
