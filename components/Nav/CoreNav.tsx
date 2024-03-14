@@ -104,6 +104,10 @@ const menu = [
         path: "/op/price",
         name: "价格源对比",
       },
+      {
+        path: "/op/message",
+        name: "发送站内消息",
+      },
     ],
   },
   {
