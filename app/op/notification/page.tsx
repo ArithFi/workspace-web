@@ -13,7 +13,7 @@ const Page = () => {
     },
   });
   const [status, setStatus] = useState("idle");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState({});
 
   const fetchList = async (start: number, count: number) => {
     const res = await fetch(
@@ -51,7 +51,7 @@ const Page = () => {
         },
         body: JSON.stringify(form),
       }).then((res) => res.json());
-      console.log(res);
+      setResult(res);
       setStatus("idle");
     } catch (e) {
       console.log(e);
@@ -129,11 +129,13 @@ const Page = () => {
               onClick={send}
               disabled={status !== "idle"}
             >
-              发送消息
+              {status === "idle" && "发送消息"}
+              {status === "loading" && "发送中"}
+              {status === "error" && "发送失败"}
             </button>
           </div>
         </div>
-        <div className={"flex-1"}></div>
+        <div className={"flex-1"}>{JSON.stringify(result)}</div>
       </div>
     </div>
   );
