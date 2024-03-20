@@ -76,7 +76,7 @@ const Page = () => {
           <div className={"w-full flex flex-col gap-2 p-4"}>
             <label className={"text-xs font-bold"}>消息标题</label>
             <input
-              value={token}
+              value={form.title}
               placeholder={"Token"}
               className={"border p-2 text-sm"}
               onChange={(e) =>
@@ -90,7 +90,7 @@ const Page = () => {
           <div className={"w-full flex flex-col gap-2 p-4"}>
             <label className={"text-xs font-bold"}>消息内容</label>
             <input
-              value={token}
+              value={form.body}
               placeholder={"Token"}
               className={"border p-2 text-sm"}
               onChange={(e) =>
@@ -104,7 +104,6 @@ const Page = () => {
           <div className={"w-full flex flex-col gap-2 p-4"}>
             <label className={"text-xs font-bold"}>消息跳转链接</label>
             <input
-              value={token}
               placeholder={"Token"}
               className={"border p-2 text-sm"}
               onChange={(e) =>
