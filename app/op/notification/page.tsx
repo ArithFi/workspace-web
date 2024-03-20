@@ -16,6 +16,11 @@ const Page = () => {
   const fetchList = async (start: number, count: number) => {
     const res = await fetch(
       `https://db.nestfi.net/arithfi/maintains/listNotification?start=${start}&count=${count}`,
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      },
     ).then((res) => res.json());
 
     if (res?.data?.length > 0) {
@@ -31,7 +36,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchList(0, 100);
-  }, []);
+  }, [token]);
 
   const send = async () => {
     setStatus("loading");
