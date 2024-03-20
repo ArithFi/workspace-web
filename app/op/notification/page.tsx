@@ -115,7 +115,9 @@ const Page = () => {
               onChange={(e) =>
                 setForm({
                   ...form,
-                  data: `/webview?url=${e.target.value}`,
+                  data: JSON.stringify({
+                    url: `/webview?url=${e.target.value}`,
+                  }),
                 })
               }
             />

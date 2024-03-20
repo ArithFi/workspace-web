@@ -37,7 +37,7 @@ const POST = async (req: NextRequest) => {
       console.error(error);
     }
   }
-
+  console.log(chunks);
   let receiptIds = [];
   for (let ticket of tickets) {
     // @ts-ignore
