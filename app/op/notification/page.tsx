@@ -40,6 +40,7 @@ const Page = () => {
 
   const send = async () => {
     setStatus("loading");
+    console.log(form);
     try {
       const res = await fetch("/api/notification", {
         method: "POST",
