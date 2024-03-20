@@ -8,7 +8,9 @@ const Page = () => {
     pushTokens: [],
     title: "",
     body: "",
-    data: "",
+    data: {
+      url: "",
+    },
   });
   const [status, setStatus] = useState("idle");
   const [result, setResult] = useState([]);
@@ -40,7 +42,6 @@ const Page = () => {
 
   const send = async () => {
     setStatus("loading");
-    console.log(form);
     try {
       const res = await fetch("/api/notification", {
         method: "POST",
@@ -115,9 +116,9 @@ const Page = () => {
               onChange={(e) =>
                 setForm({
                   ...form,
-                  data: JSON.stringify({
+                  data: {
                     url: `/webview?url=${e.target.value}`,
-                  }),
+                  },
                 })
               }
             />
