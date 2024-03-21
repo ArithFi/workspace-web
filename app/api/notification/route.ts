@@ -32,7 +32,6 @@ const POST = async (req: NextRequest) => {
     for (let chunk of chunks) {
       try {
         let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
-        console.log(ticketChunk);
         tickets.push(...ticketChunk);
       } catch (error) {
         console.error(error);
@@ -40,34 +39,7 @@ const POST = async (req: NextRequest) => {
     }
   })();
 
-  console.log(chunks);
-  let receiptIds = [];
-  for (let ticket of tickets) {
-    // @ts-ignore
-    if (ticket?.id) {
-      // @ts-ignore
-      receiptIds.push(ticket?.id);
-    }
-  }
-
-  let receiptIdChunks = expo.chunkPushNotificationReceiptIds(receiptIds);
-
-  let receiptsMap = {};
-  await (async () => {
-    for (let chunk of receiptIdChunks) {
-      try {
-        let receipts = await expo.getPushNotificationReceiptsAsync(chunk);
-        receiptsMap = {
-          ...receiptsMap,
-          ...receipts,
-        };
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  })();
-
-  return new Response(JSON.stringify(receiptsMap), { status: 200 });
+  return new Response(JSON.stringify(tickets), { status: 200 });
 };
 
 export { POST };
