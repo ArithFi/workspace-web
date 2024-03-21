@@ -13,7 +13,7 @@ const Page = () => {
     },
   });
   const [status, setStatus] = useState("idle");
-  const [result, setResult] = useState({});
+  const [result, setResult] = useState([]);
 
   const fetchList = async (start: number, count: number) => {
     const res = await fetch(
