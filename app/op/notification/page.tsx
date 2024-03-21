@@ -63,10 +63,8 @@ const Page = () => {
     <div className={"w-full h-full flex flex-col pb-2"}>
       <div className={"w-full h-60 border-b p-4"}>
         <div className={"text-sm font-medium"}>待发送列表:</div>
-        <div className={"flex flex-row"}>
-          {form.pushTokens.map((item: string, index) => (
-            <div key={index}>{item}</div>
-          ))}
+        <div className={"text-xs overflow-ellipsis"}>
+          {form.pushTokens.join(",")}
         </div>
       </div>
       <div className={"flex-1 flex gap-2"}>
