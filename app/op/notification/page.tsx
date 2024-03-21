@@ -26,15 +26,13 @@ const Page = () => {
       },
     ).then((res) => res.json());
 
-    if (res?.data?.length > 0) {
-      const availableTokens = res.data
-        .filter((item: any) => item.marketing)
-        .map((item: any) => item.pushToken);
-      setForm({
-        ...form,
-        pushTokens: availableTokens,
-      });
-    }
+    const availableTokens = res.data
+      .filter((item: any) => item.marketing)
+      .map((item: any) => item.pushToken);
+    setForm({
+      ...form,
+      pushTokens: availableTokens,
+    });
   };
 
   useEffect(() => {
