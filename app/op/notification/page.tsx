@@ -16,6 +16,7 @@ const Page = () => {
   const [result, setResult] = useState([]);
 
   const fetchList = async (start: number, count: number) => {
+    if (!token) return;
     const res = await fetch(
       `https://db.nestfi.net/arithfi/maintains/listNotification?start=${start}&count=${count}`,
       {
@@ -62,7 +63,16 @@ const Page = () => {
   return (
     <div className={"w-full h-full flex flex-col pb-2"}>
       <div className={"w-full h-60 border-b p-4"}>
-        <div className={"text-sm font-medium"}>待发送列表:</div>
+        <div className={"flex flex-row"}>
+          <div className={"text-sm font-medium"}>待发送列表:</div>
+          <button
+            className={"text-sm rounded"}
+            onClick={() => fetchList(0, 100)}
+          >
+            刷新
+          </button>
+        </div>
+
         <div className={"text-xs overflow-ellipsis"}>
           {form.pushTokens.join(",")}
         </div>
