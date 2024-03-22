@@ -28,7 +28,8 @@ const Page = () => {
 
     const availableTokens = res.data
       .filter((item: any) => item.marketing)
-      .map((item: any) => item.pushToken);
+      .map((item: any) => item.pushToken)
+      .reduce((a: string[], b: string) => (a.includes(b) ? a : [...a, b]), []);
     setForm({
       ...form,
       pushTokens: availableTokens,
