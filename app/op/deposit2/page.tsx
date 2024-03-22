@@ -22,7 +22,13 @@ const Send = () => {
       addresses
         ?.replaceAll(" ", "\n")
         ?.split("\n")
-        .filter((item) => item !== ""),
+        .filter((item) => item !== "")
+        .reduce((acc: string[], current) => {
+          if (!acc.includes(current)) {
+            acc.push(current);
+          }
+          return acc;
+        }, []),
     [addresses],
   );
   const isOk = useMemo(
