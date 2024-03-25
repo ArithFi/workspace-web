@@ -1,10 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const Page = () => {
   const [token, setToken] = useState("");
-  const [form, setForm] = useState({
+  const [lang, setLang] = useState("en");
+  const [form, setForm] = useState<{
+    pushTokens: string[];
+    title: string;
+    body: string;
+    data: {
+      url: string;
+    };
+  }>({
     pushTokens: [],
     title: "",
     body: "",
@@ -15,30 +23,44 @@ const Page = () => {
   const [status, setStatus] = useState("idle");
   const [result, setResult] = useState([]);
 
-  const fetchList = async (start: number, count: number) => {
-    if (!token) return;
-    const res = await fetch(
-      `https://db.nestfi.net/arithfi/maintains/listNotification?start=${start}&count=${count}`,
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      },
-    ).then((res) => res.json());
+  const isLangValid = useMemo(() => {
+    return ["en", "vi", "ko", "tr", ""].includes(lang);
+  }, [lang]);
 
-    const availableTokens = res.data
+  const fetchList = async (start: number, count: number, lang?: string) => {
+    if (!token) return;
+    let url = `https://db.nestfi.net/arithfi/maintains/listNotification?start=${start}&count=${count}`;
+    if (lang) {
+      url += `&lang=${lang}`;
+    }
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    }).then((res) => res.json());
+    return res.data
       .filter((item: any) => item.marketing)
-      .map((item: any) => item.pushToken)
-      .reduce((a: string[], b: string) => (a.includes(b) ? a : [...a, b]), []);
-    setForm({
-      ...form,
-      pushTokens: availableTokens,
-    });
+      .map((item: any) => item.pushToken);
   };
 
   useEffect(() => {
-    fetchList(0, 100);
-  }, [token]);
+    (async () => {
+      const count = 200;
+      let start = 0;
+      let result: string[] = [];
+      while (true) {
+        const list = await fetchList(0, 100, lang);
+        result = result.concat(list);
+        if (list.length < count) break;
+        start += count;
+      }
+      result = Array.from(new Set(result));
+      setForm({
+        ...form,
+        pushTokens: result,
+      });
+    })();
+  }, [token, lang]);
 
   const send = async () => {
     setStatus("loading");
@@ -62,22 +84,34 @@ const Page = () => {
   return (
     <div className={"w-full h-full flex flex-col pb-2"}>
       <div className={"w-full h-60 border-b p-4"}>
-        <div className={"flex flex-row"}>
-          <div className={"text-sm font-medium"}>待发送列表:</div>
+        <div className={"flex flex-row justify-between"}>
+          <div className={"text-sm font-medium"}>
+            待发送列表: {form.pushTokens.length}
+          </div>
           <button
-            className={"text-sm rounded"}
+            className={"text-sm rounded text-red-500"}
             onClick={() => fetchList(0, 100)}
           >
             刷新
           </button>
         </div>
-
         <div className={"text-xs overflow-ellipsis"}>
           {form.pushTokens.join(",")}
         </div>
       </div>
       <div className={"flex-1 flex gap-2"}>
         <div className={"w-[40%] border-r"}>
+          <div className={"w-full flex flex-col gap-2 p-4"}>
+            <label className={"text-xs font-bold"}>语言</label>
+            <input
+              value={lang}
+              placeholder={"Lang"}
+              className={`border p-2 text-sm ${
+                isLangValid ? "" : "border-red-500"
+              }`}
+              onChange={(e) => setLang(e.target.value)}
+            />
+          </div>
           <div className={"w-full flex flex-col gap-2 p-4"}>
             <label className={"text-xs font-bold"}>签名</label>
             <input
@@ -134,7 +168,7 @@ const Page = () => {
             <button
               className={`text-sm bg-[#0D6EFD] text-white p-2 rounded-[4px] disabled:opacity-50`}
               onClick={send}
-              disabled={status !== "idle"}
+              disabled={status !== "idle" || !isLangValid}
             >
               {status === "idle" && "发送消息"}
               {status === "loading" && "发送中"}
