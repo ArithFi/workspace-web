@@ -22,7 +22,7 @@ const POST = async (req: NextRequest) => {
       title: title,
       body: body,
       data: data || undefined,
-      channelId: "default",
+      channelId: "miscellaneous",
     });
   }
 
