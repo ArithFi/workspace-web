@@ -27,9 +27,17 @@ const Page = () => {
     return ["en", "vi", "ko", "tr", ""].includes(lang);
   }, [lang]);
 
+  const mode = window.localStorage.getItem("mode") || "prod";
   const fetchList = async (start: number, count: number, lang?: string) => {
     if (!token) return;
-    let url = `https://db.nestfi.net/arithfi/maintains/listNotification?start=${start}&count=${count}`;
+    let base_url;
+    if (mode === "test") {
+      base_url = "https://db.nestfi.net/arithfi/maintains/listNotification";
+    } else {
+      base_url =
+        "https://db.arithfi.com/arithfi_main/maintains/listNotification";
+    }
+    let url = `${base_url}?start=${start}&count=${count}`;
     if (lang) {
       url += `&lang=${lang}`;
     }
@@ -60,7 +68,7 @@ const Page = () => {
         pushTokens: result,
       });
     })();
-  }, [token, lang]);
+  }, [token, lang, mode]);
 
   const send = async () => {
     setStatus("loading");
