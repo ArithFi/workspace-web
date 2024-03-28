@@ -108,10 +108,6 @@ const menu = [
         path: "/op/message",
         name: "发送站内消息",
       },
-      {
-        path: "/op/notification",
-        name: "发送应用通知",
-      },
     ],
   },
   {
