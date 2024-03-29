@@ -17,6 +17,16 @@ const Send = () => {
   const [confirm, setConfirm] = useState("");
   const [todoStatus, setTodoStatus] = useState(0);
 
+  const mode = window.localStorage.getItem("mode") || "prod";
+
+  const HOSTNAME = useMemo(() => {
+    if (mode === "test") {
+      return "https://db.nestfi.net/arithfi";
+    } else {
+      return "https://db.arithfi.com/arithfi_main";
+    }
+  }, [mode]);
+
   const addressArray = useMemo(
     () =>
       addresses
@@ -38,9 +48,9 @@ const Send = () => {
 
   const { data, mutate } = useSWR(
     token
-      ? `https://db.arithfi.com/arithfi_main/maintains/listAirdrop?walletAddress=${form.promoter}&status=${todoStatus}&count=100`
+      ? `${HOSTNAME}/maintains/listAirdrop?walletAddress=${form.promoter}&status=${todoStatus}&count=100`
       : undefined,
-    (url) =>
+    (url: string) =>
       fetch(url, {
         headers: {
           Authorization: token,
@@ -51,13 +61,13 @@ const Send = () => {
         .then((res) => res.json())
         .then((res) => res.data),
     {
-      refreshInterval: 10_000,
+      refreshInterval: 5_000,
     },
   );
 
   useEffect(() => {
     mutate();
-  }, [todoStatus]);
+  }, [todoStatus, HOSTNAME, token]);
 
   const send = async () => {
     setStatus("loading");
@@ -65,17 +75,8 @@ const Send = () => {
       setStatus("error");
       return;
     }
-
-    const mode = window.localStorage.getItem("mode") || "prod";
-    let url;
-    if (mode === "test") {
-      url = "https://db.nestfi.net/arithfi/maintains/airdrop";
-    } else {
-      url = "https://db.arithfi.com/arithfi_main/maintains/airdrop";
-    }
-
     try {
-      const res = await fetch(url, {
+      const res = await fetch(`${HOSTNAME}/maintains/airdrop`, {
         method: "POST",
         headers: {
           Authorization: `${token}`,
@@ -120,15 +121,7 @@ const Send = () => {
   };
 
   const agree = async (id: number, batchNo: string) => {
-    const mode = window.localStorage.getItem("mode") || "prod";
-    let url;
-    if (mode === "test") {
-      url = "https://db.nestfi.net/arithfi/maintains/confirmAirdrop";
-    } else {
-      url = "https://db.arithfi.com/arithfi_main/maintains/confirmAirdrop";
-    }
-
-    await fetch(url, {
+    await fetch(`${HOSTNAME}/maintains/confirmAirdrop`, {
       method: "POST",
       headers: {
         Authorization: `${token}`,
@@ -145,15 +138,7 @@ const Send = () => {
   };
 
   const disagree = async (id: number, batchNo: string) => {
-    const mode = window.localStorage.getItem("mode") || "prod";
-    let url;
-    if (mode === "test") {
-      url = "https://db.nestfi.net/arithfi/maintains/rejectAirdrop";
-    } else {
-      url = "https://db.arithfi.com/arithfi_main/maintains/rejectAirdrop";
-    }
-
-    await fetch(url, {
+    await fetch(`${HOSTNAME}/maintains/rejectAirdrop`, {
       method: "POST",
       headers: {
         Authorization: `${token}`,
@@ -185,14 +170,6 @@ const Send = () => {
   };
 
   const batchAgree = async (data: ItemType[]) => {
-    const mode = window.localStorage.getItem("mode") || "prod";
-    let url;
-    if (mode === "test") {
-      url = "https://db.nestfi.net/arithfi/maintains/confirmAirdrop";
-    } else {
-      url = "https://db.arithfi.com/arithfi_main/maintains/confirmAirdrop";
-    }
-
     const groupedData = data.reduce(
       (groups: Record<string, ItemType[]>, item) => {
         const { batchNo } = item;
@@ -212,7 +189,7 @@ const Send = () => {
         batchNo: batchNo,
         walletAddress: form.promoter,
       });
-      await fetch(url, {
+      await fetch(`${HOSTNAME}/maintains/confirmAirdrop`, {
         method: "POST",
         headers: {
           Authorization: `${token}`,
