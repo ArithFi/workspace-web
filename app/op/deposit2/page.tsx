@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { isAddress } from "@ethersproject/address";
 import useSWR from "swr";
+import * as jose from "jose";
 
 const Send = () => {
   const [status, setStatus] = useState("idle");
@@ -64,6 +65,45 @@ const Send = () => {
       refreshInterval: 5_000,
     },
   );
+
+  useEffect(() => {
+    // decode token with jose
+    if (token) {
+      try {
+        const decodedToken = jose.decodeJwt(token);
+        console.log(decodedToken);
+        // 根据 exp 判断是否过期
+        if (decodedToken?.exp) {
+          if (decodedToken.exp > Math.ceil(new Date().getTime() / 1000)) {
+            setForm({
+              ...form,
+              promoter: decodedToken.walletAddress as string,
+            });
+          } else {
+            setForm({
+              ...form,
+              promoter: "Token 无效或者过期",
+            });
+          }
+        } else {
+          setForm({
+            ...form,
+            promoter: "Token 无效或者过期",
+          });
+        }
+      } catch (e) {
+        setForm({
+          ...form,
+          promoter: "",
+        });
+      }
+    } else {
+      setForm({
+        ...form,
+        promoter: "",
+      });
+    }
+  }, [token]);
 
   useEffect(() => {
     mutate();
@@ -269,6 +309,7 @@ const Send = () => {
         <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>发起人</label>
           <input
+            disabled
             value={form.promoter}
             placeholder={"发起人"}
             className={"border p-2 text-sm"}
