@@ -259,6 +259,23 @@ const Send = () => {
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
+          <label className={"text-xs font-bold"}>充值类型</label>
+          <select
+            name="orderType"
+            id="orderType"
+            className={"focus:outline-0 bg-gray-100 p-2 rounded"}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                orderType: e.target.value,
+              })
+            }
+          >
+            <option value={"DEPOSIT"}>空投</option>
+            <option value={"LIMITED"}>限时空投</option>
+          </select>
+        </div>
+        <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>备注</label>
           <input
             value={form.info}
