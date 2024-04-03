@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { ReactNode } from "react";
-import Dock from "@/components/Dock";
 import Toolbar from "@/components/Toolbar";
 import Navigation from "@/components/Nav/Navigation";
 

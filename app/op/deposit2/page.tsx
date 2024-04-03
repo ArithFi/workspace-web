@@ -17,6 +17,7 @@ const Send = () => {
   const [token, setToken] = useState("");
   const [confirm, setConfirm] = useState("");
   const [todoStatus, setTodoStatus] = useState(0);
+  const [error, setError] = useState("");
 
   const mode = window.localStorage.getItem("mode") || "prod";
 
@@ -132,10 +133,15 @@ const Send = () => {
             promoter: form.promoter,
           })),
         ),
-      })
-        .then((res) => res.json())
-        .then((res) => res.data);
-      if (res) {
+      }).then((res) => res.json());
+      if (res.error) {
+        setError(res.error);
+        setStatus("error");
+        setTimeout(() => {
+          setStatus("idle");
+        }, 3000);
+      }
+      if (res.data) {
         setStatus("success");
         await mutate();
         setConfirm("");
@@ -143,7 +149,6 @@ const Send = () => {
           setStatus("idle");
         }, 3000);
       } else {
-        setStatus("error");
         await mutate();
         setConfirm("");
         setTimeout(() => {
@@ -152,6 +157,7 @@ const Send = () => {
       }
     } catch (e) {
       setStatus("error");
+      setError(`${e}`);
       await mutate();
       setConfirm("");
       setTimeout(() => {
@@ -161,7 +167,7 @@ const Send = () => {
   };
 
   const agree = async (id: number, batchNo: string) => {
-    await fetch(`${HOSTNAME}/maintains/confirmAirdrop`, {
+    const res = await fetch(`${HOSTNAME}/maintains/confirmAirdrop`, {
       method: "POST",
       headers: {
         Authorization: `${token}`,
@@ -173,7 +179,10 @@ const Send = () => {
         batchNo: batchNo,
         walletAddress: form.promoter,
       }),
-    });
+    }).then((res) => res.json());
+    if (res.error) {
+      setError(res.error);
+    }
     await mutate();
   };
 
@@ -221,15 +230,9 @@ const Send = () => {
       },
       {},
     );
-    console.log(groupedData);
     for (const batchNo in groupedData) {
       const ids = groupedData[batchNo].map((item: any) => item.id);
-      console.log({
-        ids: ids,
-        batchNo: batchNo,
-        walletAddress: form.promoter,
-      });
-      await fetch(`${HOSTNAME}/maintains/confirmAirdrop`, {
+      const res = await fetch(`${HOSTNAME}/maintains/confirmAirdrop`, {
         method: "POST",
         headers: {
           Authorization: `${token}`,
@@ -241,9 +244,11 @@ const Send = () => {
           batchNo: batchNo,
           walletAddress: form.promoter,
         }),
-      });
+      }).then((res) => res.json());
+      if (res.error) {
+        setError(res.error);
+      }
     }
-
     await mutate();
   };
 
@@ -355,6 +360,7 @@ const Send = () => {
             {status === "loading" && "充值中..."}
           </button>
         </div>
+        <div>{error && <div className={"text-red-500"}>{error}</div>}</div>
       </div>
       <div className={"w-full space-y-6 overflow-scroll border"}>
         <div className={"flex flex-row items-center text-xs font-bold m-3"}>
