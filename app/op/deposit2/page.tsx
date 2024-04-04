@@ -10,7 +10,7 @@ const Send = () => {
   const [addresses, setAddresses] = useState("");
   const [form, setForm] = useState({
     amount: "",
-    orderType: "DEPOSIT",
+    orderType: "",
     info: "",
     promoter: "",
   });
@@ -286,6 +286,7 @@ const Send = () => {
             name="orderType"
             id="orderType"
             className={"focus:outline-0 bg-gray-100 p-2 rounded"}
+            value={form.orderType}
             onChange={(e) =>
               setForm({
                 ...form,
@@ -293,6 +294,7 @@ const Send = () => {
               })
             }
           >
+            <option value={""}>请选择类型</option>
             <option value={"DEPOSIT"}>空投</option>
             <option value={"LIMITED"}>限时空投</option>
           </select>
@@ -352,7 +354,12 @@ const Send = () => {
               "bg-yellow-500 p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed px-4 text-sm"
             }
             onClick={send}
-            disabled={!isOk || !addressArray?.length || confirm !== form.amount}
+            disabled={
+              !isOk ||
+              !addressArray?.length ||
+              confirm !== form.amount ||
+              !form.orderType
+            }
           >
             {status === "idle" && "充值"}
             {status === "success" && "充值成功"}
