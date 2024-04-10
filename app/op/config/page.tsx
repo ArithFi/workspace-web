@@ -157,6 +157,7 @@ const Page = () => {
               home_support_url
             </div>
             <div className={"text-xs font-bold border p-1"}>home_banner_en</div>
+            <div className={"text-xs font-bold border p-1"}>home_popup</div>
           </div>
         </div>
         <div className={"flex flex-col gap-2"}>
@@ -170,6 +171,29 @@ const Page = () => {
                   link: "https://xxx",
                 },
               ])}
+            </div>
+            <div className={"text-xs font-bold border p-1"}>
+              {JSON.stringify({
+                version: 1,
+                data: {
+                  en: {
+                    image: "https://xxx",
+                    link: "https://xxx",
+                  },
+                  vi: {
+                    image: "https://xxx",
+                    link: "https://xxx",
+                  },
+                  ko: {
+                    image: "https://xxx",
+                    link: "https://xxx",
+                  },
+                  tr: {
+                    image: "https://xxx",
+                    link: "https://xxx",
+                  },
+                },
+              })}
             </div>
           </div>
         </div>
