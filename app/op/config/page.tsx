@@ -162,7 +162,7 @@ const Page = () => {
         </div>
         <div className={"flex flex-col gap-2"}>
           <div className={"font-bold text-xs"}>常用 Value</div>
-          <div className={"flex gap-2"}>
+          <div className={"flex gap-2 flex-col"}>
             <div className={"text-xs font-bold border p-1"}>
               {JSON.stringify([
                 {
