@@ -33,7 +33,7 @@ const CSR = () => {
       }
       try {
         await fetch(
-          "https://db.arithfi.com/dashboardapi/users/users/saveInviteUser",
+          "https://db.arithfi.com/arithfi_main/invite/saveInviteUser",
           {
             method: "POST",
             headers: {
