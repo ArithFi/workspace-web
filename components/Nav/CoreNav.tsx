@@ -108,6 +108,10 @@ const menu = [
         path: "/op/message",
         name: "发送站内消息",
       },
+      {
+        path: "/op/rank",
+        name: "活跃积分管理",
+      },
     ],
   },
   {
