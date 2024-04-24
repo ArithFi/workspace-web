@@ -58,8 +58,8 @@ const Send = () => {
       .then((res) => res.json())
       .then((res) => res.data);
     setCurrent({
-      telegram: data?.data[0].telegram || 0,
-      discord: data?.data[0].discord || 0,
+      telegram: data[0]?.telegram || 0,
+      discord: data[0]?.discord || 0,
     });
   };
 
