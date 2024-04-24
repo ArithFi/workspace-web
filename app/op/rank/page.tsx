@@ -41,7 +41,7 @@ const Send = () => {
 
   const getLastPoints = async (walletAddress: string) => {
     const data = await fetch(
-      `https://db.nestfi.net/arithfi/maintains/maintains/listUserFixedPoints?walletAddress=${walletAddress}`,
+      `https://db.nestfi.net/arithfi/maintains/listUserFixedPoints?walletAddress=${walletAddress}`,
       {
         method: "GET",
         headers: {
