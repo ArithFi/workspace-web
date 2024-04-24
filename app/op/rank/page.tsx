@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isAddress } from "@ethersproject/address";
 
 const Send = () => {
@@ -37,6 +37,31 @@ const Send = () => {
       .then((res) => res.json())
       .then((res) => res.data);
   };
+
+  const getLastPoints = async (walletAddress: string) => {
+    const data = await fetch(
+      `https://db.nestfi.net/arithfi/maintains/maintains/listUserFixedPoints&walletAddress=${walletAddress}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+          token: `${Math.ceil(new Date().getTime() / 1000)}`,
+        },
+      },
+    )
+      .then((res) => res.json())
+      .then((res) => res.data);
+    console.log(data);
+  };
+
+  useEffect(() => {
+    if (token && isAddress(form.to)) {
+      getLastPoints(form.to);
+    } else {
+      console.log("地址错误");
+    }
+  }, [form.to, token]);
 
   return (
     <div className={"flex flex-row space-x-4 h-full pb-8"}>
