@@ -11,6 +11,10 @@ const Send = () => {
     discord: "0",
   });
   const [token, setToken] = useState("");
+  const [current, setCurrent] = useState({
+    telegram: "0",
+    discord: "0",
+  });
 
   const send = async () => {
     setStatus("loading");
@@ -53,7 +57,10 @@ const Send = () => {
     )
       .then((res) => res.json())
       .then((res) => res.data);
-    console.log(data);
+    setCurrent({
+      telegram: data?.data[0].telegram || 0,
+      discord: data?.data[0].discord || 0,
+    });
   };
 
   useEffect(() => {
@@ -85,7 +92,7 @@ const Send = () => {
           <label className={"text-xs font-bold"}>电报活跃积分</label>
           <input
             value={form.telegram}
-            placeholder={"电报积分"}
+            placeholder={`当前积分：${current.telegram || 0}`}
             onChange={(e) => {
               setForm({
                 ...form,
@@ -99,7 +106,7 @@ const Send = () => {
           <label className={"text-xs font-bold"}>Discord活跃积分</label>
           <input
             value={form.discord}
-            placeholder={"Discord积分"}
+            placeholder={`当前积分：${current.discord || 0}`}
             onChange={(e) => {
               setForm({
                 ...form,
