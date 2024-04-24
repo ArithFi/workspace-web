@@ -5,7 +5,6 @@ import { isAddress } from "@ethersproject/address";
 
 const Send = () => {
   const [status, setStatus] = useState("idle");
-  const [address, setAddress] = useState("");
   const [form, setForm] = useState({
     to: "",
     telegram: "",
@@ -69,10 +68,13 @@ const Send = () => {
         <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>目标地址:</label>
           <textarea
-            value={address}
+            value={form.to}
             placeholder={"目标地址"}
             onChange={(e) => {
-              setAddress(e.target.value);
+              setForm({
+                ...form,
+                to: e.target.value,
+              });
             }}
             className={"border w-full p-2 text-sm"}
           />
