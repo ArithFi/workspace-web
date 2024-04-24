@@ -7,8 +7,8 @@ const Send = () => {
   const [status, setStatus] = useState("idle");
   const [form, setForm] = useState({
     to: "",
-    telegram: "",
-    discord: "",
+    telegram: "0",
+    discord: "0",
   });
   const [token, setToken] = useState("");
 
