@@ -23,7 +23,9 @@ const Send = () => {
       url = "https://db.arithfi.com/arithfi_main/maintains/saveUserFixedPoint";
     }
     await fetch(
-      `${url}?walletAddress=${form.to}&telegram=${form.telegram}&discord=${form.discord}`,
+      `${url}?walletAddress=${form.to}&telegram=${
+        form.telegram || "0"
+      }&discord=${form.discord || "0"}`,
       {
         method: "POST",
         headers: {
