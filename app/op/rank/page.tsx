@@ -94,7 +94,7 @@ const Send = () => {
         <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>Discord活跃积分</label>
           <input
-            value={form.telegram}
+            value={form.discord}
             placeholder={"Discord积分"}
             onChange={(e) => {
               setForm({
