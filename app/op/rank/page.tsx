@@ -81,7 +81,7 @@ const Send = () => {
       })
         .then((res) => res.json())
         .then((res) => res.data);
-      return data[0]?.telegram;
+      return data?.[0]?.telegram || 0;
     } catch (e) {
       return 0;
     }
