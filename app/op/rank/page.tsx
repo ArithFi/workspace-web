@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { isAddress } from "@ethersproject/address";
 
 const Send = () => {
@@ -13,6 +13,21 @@ const Send = () => {
   const [addressesString, setAddressString] = useState("");
   const [logs, setLogs] = useState<string[]>([]);
 
+  const addressArray = useMemo(
+    () =>
+      addressesString
+        ?.replaceAll(" ", "\n")
+        ?.split("\n")
+        .filter((item) => item !== "")
+        .reduce((acc: string[], current) => {
+          if (!acc.includes(current)) {
+            acc.push(current);
+          }
+          return acc;
+        }, []),
+    [addressesString],
+  );
+
   const send = async () => {
     setStatus("loading");
 
@@ -24,9 +39,7 @@ const Send = () => {
       url = "https://db.arithfi.com/arithfi_main/maintains/saveUserFixedPoint";
     }
 
-    const addresses = addressesString.split(",");
-
-    for (const address of addresses) {
+    for (const address of addressArray) {
       if (isAddress(address)) {
         const prev = await getLastPoints(address);
         const now = Number(form?.telegram || 0) + prev;
