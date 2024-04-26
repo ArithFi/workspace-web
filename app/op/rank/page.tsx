@@ -38,7 +38,7 @@ const Send = () => {
     } else {
       url = "https://db.arithfi.com/arithfi_main/maintains/saveUserFixedPoint";
     }
-
+    const array = [];
     for (const address of addressArray) {
       if (isAddress(address)) {
         const prev = await getLastPoints(address);
@@ -54,7 +54,8 @@ const Send = () => {
             },
           },
         );
-        setLogs([...logs, `${address}, now:${now}`]);
+        array.push(`${address}, prev:${prev}, now:${now}`);
+        setLogs(array);
       }
     }
 
