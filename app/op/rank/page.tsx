@@ -1,20 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { isAddress } from "@ethersproject/address";
 
 const Send = () => {
   const [status, setStatus] = useState("idle");
   const [form, setForm] = useState({
-    to: "",
     telegram: "",
     discord: "",
   });
   const [token, setToken] = useState("");
-  const [current, setCurrent] = useState({
-    telegram: "0",
-    discord: "0",
-  });
+  const [addressesString, setAddressString] = useState("");
+  const [logs, setLogs] = useState<string[]>([]);
 
   const send = async () => {
     setStatus("loading");
@@ -26,50 +23,54 @@ const Send = () => {
     } else {
       url = "https://db.arithfi.com/arithfi_main/maintains/saveUserFixedPoint";
     }
-    await fetch(
-      `${url}?walletAddress=${form.to}&telegram=${
-        form.telegram || "0"
-      }&discord=${form.discord || "0"}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `${token}`,
-          "Content-Type": "application/json",
-          token: `${Math.ceil(new Date().getTime() / 1000)}`,
-        },
-      },
-    )
-      .then((res) => res.json())
-      .then((res) => res.data);
+
+    const addresses = addressesString.split(",");
+
+    for (const address of addresses) {
+      if (isAddress(address)) {
+        const prev = await getLastPoints(address);
+        const now = Number(form?.telegram || 0) + prev;
+        await fetch(
+          `${url}?walletAddress=${address}&telegram=${now}&discord=0`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `${token}`,
+              "Content-Type": "application/json",
+              token: `${Math.ceil(new Date().getTime() / 1000)}`,
+            },
+          },
+        );
+        setLogs([...logs, `${address}, now:${now}`]);
+      }
+    }
   };
 
   const getLastPoints = async (walletAddress: string) => {
-    const data = await fetch(
-      `https://db.nestfi.net/arithfi/maintains/listUserFixedPoints?walletAddress=${walletAddress}`,
-      {
+    try {
+      const mode = window.localStorage.getItem("mode") || "prod";
+      let url;
+      if (mode === "test") {
+        url = "https://db.nestfi.net/arithfi/maintains/listUserFixedPoints";
+      } else {
+        url =
+          "https://db.arithfi.com/arithfi_main/maintains/listUserFixedPoints";
+      }
+      const data = await fetch(`${url}?walletAddress=${walletAddress}`, {
         method: "GET",
         headers: {
           Authorization: `${token}`,
           "Content-Type": "application/json",
           token: `${Math.ceil(new Date().getTime() / 1000)}`,
         },
-      },
-    )
-      .then((res) => res.json())
-      .then((res) => res.data);
-    setCurrent({
-      telegram: data[0]?.telegram || 0,
-      discord: data[0]?.discord || 0,
-    });
-  };
-
-  useEffect(() => {
-    if (token && isAddress(form.to)) {
-      getLastPoints(form.to);
-    } else {
-      console.log("地址错误");
+      })
+        .then((res) => res.json())
+        .then((res) => res.data);
+      return data[0]?.telegram;
+    } catch (e) {
+      return 0;
     }
-  }, [form.to, token]);
+  };
 
   return (
     <div className={"flex flex-row space-x-4 h-full pb-8"}>
@@ -77,40 +78,22 @@ const Send = () => {
         <div className={"w-full flex flex-col gap-2"}>
           <label className={"text-xs font-bold"}>目标地址:</label>
           <textarea
-            value={form.to}
+            value={addressesString}
             placeholder={"目标地址"}
             onChange={(e) => {
-              setForm({
-                ...form,
-                to: e.target.value,
-              });
+              setAddressString(e.target.value);
             }}
             className={"border w-full p-2 text-sm"}
           />
         </div>
         <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>电报活跃积分</label>
+          <label className={"text-xs font-bold"}>新增积分</label>
           <input
             value={form.telegram}
-            placeholder={`当前积分：${current.telegram || 0}`}
             onChange={(e) => {
               setForm({
                 ...form,
                 telegram: e.target.value,
-              });
-            }}
-            className={"border p-2 text-sm"}
-          />
-        </div>
-        <div className={"w-full flex flex-col gap-2"}>
-          <label className={"text-xs font-bold"}>Discord活跃积分</label>
-          <input
-            value={form.discord}
-            placeholder={`当前积分：${current.discord || 0}`}
-            onChange={(e) => {
-              setForm({
-                ...form,
-                discord: e.target.value,
               });
             }}
             className={"border p-2 text-sm"}
@@ -138,6 +121,13 @@ const Send = () => {
             {status === "loading" && "更新中..."}
           </button>
         </div>
+      </div>
+      <div className={"flex-1 flex-row"}>
+        {logs.map((log, index) => (
+          <div key={index}>
+            <div>{log}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
