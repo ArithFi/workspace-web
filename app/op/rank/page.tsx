@@ -44,6 +44,8 @@ const Send = () => {
         setLogs([...logs, `${address}, now:${now}`]);
       }
     }
+
+    setStatus("success");
   };
 
   const getLastPoints = async (walletAddress: string) => {
